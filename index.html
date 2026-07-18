@@ -1,0 +1,3014 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SMC ICT Academy | Professional Trading Education</title>
+    <style>
+        :root {
+            --bg-primary: #070b14;
+            --bg-secondary: #0d1321;
+            --bg-tertiary: #141c2b;
+            --bg-card: #1a2332;
+            --bg-glass: rgba(26, 35, 50, 0.85);
+            --text-primary: #e8edf5;
+            --text-secondary: #a0b4cc;
+            --text-tertiary: #6b7d95;
+            --accent: #3b82f6;
+            --accent-light: #60a5fa;
+            --accent-dark: #2563eb;
+            --accent-glow: rgba(59, 130, 246, 0.25);
+            --gold: #f0b90b;
+            --gold-light: #fcd535;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --info: #6366f1;
+            --border: #1e2d40;
+            --border-light: #2a3a50;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            --shadow-lg: 0 8px 40px rgba(0, 0, 0, 0.6);
+            --shadow-glow: 0 0 30px var(--accent-glow);
+            --radius: 14px;
+            --radius-sm: 10px;
+            --radius-lg: 20px;
+            --radius-xl: 24px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --font-mono: 'SF Mono', 'Cascadia Code', 'Consolas', monospace;
+        }
+
+        .light-theme {
+            --bg-primary: #f0f4f8;
+            --bg-secondary: #ffffff;
+            --bg-tertiary: #e8edf3;
+            --bg-card: #ffffff;
+            --bg-glass: rgba(255, 255, 255, 0.9);
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --text-tertiary: #94a3b8;
+            --border: #e2e8f0;
+            --border-light: #d1d5db;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 8px 40px rgba(0, 0, 0, 0.12);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            letter-spacing: -0.01em;
+        }
+
+        /* Premium Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-secondary);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--border-light);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent);
+        }
+
+        /* Typography */
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-weight: 700;
+            line-height: 1.25;
+            color: var(--text-primary);
+            letter-spacing: -0.02em;
+        }
+        h1 {
+            font-size: 2.75rem;
+            background: linear-gradient(135deg, var(--text-primary), var(--accent-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        h2 {
+            font-size: 2.25rem;
+        }
+        h3 {
+            font-size: 1.75rem;
+        }
+        h4 {
+            font-size: 1.35rem;
+        }
+        h5 {
+            font-size: 1.15rem;
+        }
+        p {
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* App Layout */
+        .app-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Premium Sidebar */
+        .sidebar {
+            width: 300px;
+            background: var(--bg-secondary);
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            transition: var(--transition);
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            z-index: 100;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+        .sidebar.collapsed {
+            width: 75px;
+        }
+        .sidebar.collapsed .logo-text,
+        .sidebar.collapsed .nav-section-title,
+        .sidebar.collapsed .nav-item span,
+        .sidebar.collapsed .progress-text,
+        .sidebar.collapsed .sidebar-badge,
+        .sidebar.collapsed .user-info {
+            display: none;
+        }
+        .sidebar.collapsed .nav-item {
+            justify-content: center;
+            padding: 0.85rem;
+        }
+        .sidebar-header {
+            padding: 1.75rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border);
+            background: rgba(59, 130, 246, 0.03);
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+        }
+        .logo-icon {
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(135deg, var(--accent), #8b5cf6);
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: white;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+        }
+        .logo-text {
+            font-size: 1.2rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+        }
+        .logo-text .accent {
+            color: var(--accent);
+        }
+        .sidebar-toggle {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 0.5rem 0.65rem;
+            border-radius: var(--radius-sm);
+            transition: var(--transition);
+            font-size: 1.1rem;
+        }
+        .sidebar-toggle:hover {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+
+        /* Navigation */
+        .sidebar-nav {
+            flex: 1;
+            padding: 1.25rem 1rem;
+        }
+        .nav-section {
+            margin-bottom: 1.75rem;
+        }
+        .nav-section-title {
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--text-tertiary);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            padding: 0.5rem 0.85rem;
+            margin-bottom: 0.5rem;
+        }
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+            padding: 0.8rem 0.85rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: var(--radius-sm);
+            transition: var(--transition);
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 0.2rem;
+            position: relative;
+        }
+        .nav-item:hover {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            transform: translateX(4px);
+        }
+        .nav-item.active {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(139, 92, 246, 0.1));
+            color: var(--accent-light);
+            font-weight: 600;
+            box-shadow: inset 3px 0 0 var(--accent);
+        }
+        .nav-icon {
+            font-size: 1.25rem;
+            width: 24px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+        .sidebar-badge {
+            margin-left: auto;
+            background: var(--accent);
+            color: white;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.55rem;
+            border-radius: 1rem;
+            font-weight: 600;
+        }
+
+        /* Sidebar Footer */
+        .sidebar-footer {
+            padding: 1.25rem;
+            border-top: 1px solid var(--border);
+        }
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            padding: 0.5rem;
+            border-radius: var(--radius-sm);
+            background: var(--bg-tertiary);
+        }
+        .user-avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), #8b5cf6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: white;
+            font-size: 0.9rem;
+        }
+        .user-details {
+            flex: 1;
+        }
+        .user-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--text-primary);
+        }
+        .user-role {
+            font-size: 0.75rem;
+            color: var(--text-tertiary);
+        }
+        .progress-bar-container {
+            margin-bottom: 1rem;
+        }
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+        .progress-bar {
+            height: 8px;
+            background: var(--bg-tertiary);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), #8b5cf6);
+            border-radius: 10px;
+            transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 20px;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+        }
+        .theme-toggle {
+            width: 100%;
+            padding: 0.75rem;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+        .theme-toggle:hover {
+            background: var(--bg-card);
+            color: var(--text-primary);
+            border-color: var(--accent);
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: 300px;
+            transition: var(--transition);
+            min-height: 100vh;
+            background: var(--bg-primary);
+        }
+        .sidebar.collapsed~.main-content {
+            margin-left: 75px;
+        }
+
+        /* Premium Top Navigation */
+        .top-nav {
+            background: var(--bg-glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 90;
+            gap: 1rem;
+        }
+        .search-wrapper {
+            position: relative;
+            flex: 0 1 450px;
+        }
+        .search-icon {
+            position: absolute;
+            left: 1.1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-tertiary);
+            font-size: 1.1rem;
+            pointer-events: none;
+        }
+        .search-input {
+            width: 100%;
+            padding: 0.8rem 1rem 0.8rem 3rem;
+            background: var(--bg-tertiary);
+            border: 2px solid var(--border);
+            border-radius: 3rem;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+        .search-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px var(--accent-glow);
+            background: var(--bg-card);
+        }
+        .search-input::placeholder {
+            color: var(--text-tertiary);
+        }
+        .search-shortcut {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            padding: 0.2rem 0.6rem;
+            border-radius: 0.4rem;
+            font-size: 0.7rem;
+            color: var(--text-tertiary);
+            font-family: var(--font-mono);
+        }
+        .top-nav-actions {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+        .icon-btn {
+            position: relative;
+            padding: 0.6rem;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            cursor: pointer;
+            border-radius: var(--radius-sm);
+            transition: var(--transition);
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-weight: 500;
+        }
+        .icon-btn:hover {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        }
+        .badge {
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            background: var(--danger);
+            color: white;
+            font-size: 0.65rem;
+            padding: 0.15rem 0.45rem;
+            border-radius: 1rem;
+            font-weight: 700;
+            border: 2px solid var(--bg-primary);
+        }
+
+        /* Content Area */
+        .content-area {
+            padding: 2.5rem;
+            max-width: 1400px;
+            animation: fadeInUp 0.5s ease;
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Cards */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.75rem;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent-glow), transparent);
+            opacity: 0;
+            transition: var(--transition);
+        }
+        .card:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-3px);
+            border-color: var(--border-light);
+        }
+        .card:hover::before {
+            opacity: 1;
+        }
+        .card-glass {
+            background: var(--bg-glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .card-accent {
+            border-left: 4px solid var(--accent);
+        }
+        .card-gold {
+            border: 2px solid var(--gold);
+            background: linear-gradient(135deg, rgba(240, 185, 11, 0.05), transparent);
+        }
+
+        /* Grid */
+        .grid {
+            display: grid;
+            gap: 1.5rem;
+        }
+        .grid-2 {
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        }
+        .grid-3 {
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        }
+        .grid-4 {
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 0.8rem 1.75rem;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            letter-spacing: -0.01em;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: var(--transition);
+            transform: translateX(-100%);
+        }
+        .btn:hover::after {
+            transform: translateX(100%);
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+            color: white;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        }
+        .btn-primary:hover {
+            box-shadow: 0 6px 25px rgba(59, 130, 246, 0.5);
+            transform: translateY(-2px);
+        }
+        .btn-gold {
+            background: linear-gradient(135deg, var(--gold), #d4a30a);
+            color: #1a1a1a;
+            font-weight: 700;
+            box-shadow: 0 4px 15px rgba(240, 185, 11, 0.3);
+        }
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--border);
+            color: var(--text-primary);
+        }
+        .btn-outline:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: rgba(59, 130, 246, 0.05);
+        }
+        .btn-sm {
+            padding: 0.5rem 1rem;
+            font-size: 0.8rem;
+        }
+        .btn-lg {
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
+        }
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        /* Badges */
+        .badge-tag {
+            display: inline-block;
+            padding: 0.3rem 0.85rem;
+            border-radius: 2rem;
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+        }
+        .badge-primary {
+            background: rgba(59, 130, 246, 0.12);
+            color: var(--accent-light);
+        }
+        .badge-success {
+            background: rgba(16, 185, 129, 0.12);
+            color: var(--success);
+        }
+        .badge-warning {
+            background: rgba(245, 158, 11, 0.12);
+            color: var(--warning);
+        }
+        .badge-gold {
+            background: rgba(240, 185, 11, 0.15);
+            color: var(--gold);
+        }
+        .badge-danger {
+            background: rgba(239, 68, 68, 0.12);
+            color: var(--danger);
+        }
+
+        .mt-2 {
+            margin-top: 1rem;
+        }
+        .mt-3 {
+            margin-top: 1.5rem;
+        }
+        .mt-4 {
+            margin-top: 2rem;
+        }
+        .mb-2 {
+            margin-bottom: 1rem;
+        }
+        .mb-3 {
+            margin-bottom: 1.5rem;
+        }
+        .mb-4 {
+            margin-bottom: 2rem;
+        }
+        .text-muted {
+            color: var(--text-tertiary);
+        }
+        .text-accent {
+            color: var(--accent-light);
+        }
+        .text-gold {
+            color: var(--gold);
+        }
+        .text-center {
+            text-align: center;
+        }
+
+        /* Stats Cards */
+        .stat-card {
+            text-align: center;
+            padding: 1.75rem;
+        }
+        .stat-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.75rem;
+        }
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--accent-light);
+            letter-spacing: -0.03em;
+            background: linear-gradient(135deg, var(--accent-light), #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-tertiary);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .stat-change {
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-top: 0.3rem;
+        }
+        .stat-change.up {
+            color: var(--success);
+        }
+        .stat-change.down {
+            color: var(--danger);
+        }
+
+        /* Course Card */
+        .course-card {
+            cursor: pointer;
+            padding: 1.75rem;
+            transition: var(--transition);
+        }
+        .course-card:hover {
+            border-color: var(--accent);
+            box-shadow: var(--shadow-glow);
+        }
+        .course-card .module-number {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--accent-light);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        /* Lecture Card */
+        .lecture-card {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+            cursor: pointer;
+            padding: 1.25rem 1.5rem;
+            transition: var(--transition);
+        }
+        .lecture-card:hover {
+            border-color: var(--accent);
+            background: var(--bg-tertiary);
+        }
+        .lecture-card.completed {
+            border-left: 4px solid var(--success);
+        }
+        .lecture-number {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--bg-tertiary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+            border: 2px solid var(--border);
+            transition: var(--transition);
+        }
+        .lecture-card.completed .lecture-number {
+            background: var(--success);
+            border-color: var(--success);
+            color: white;
+        }
+        .lecture-info {
+            flex: 1;
+        }
+        .lecture-info h5 {
+            margin-bottom: 0.2rem;
+            font-size: 1rem;
+        }
+        .lecture-info p {
+            font-size: 0.85rem;
+            margin-bottom: 0.3rem;
+        }
+        .lecture-meta {
+            display: flex;
+            gap: 1.25rem;
+            font-size: 0.8rem;
+            color: var(--text-tertiary);
+        }
+
+        /* Lecture View */
+        .lecture-view {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 2rem;
+            align-items: start;
+        }
+        .lecture-sidebar {
+            background: var(--bg-secondary);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            position: sticky;
+            top: 100px;
+            border: 1px solid var(--border);
+        }
+        .outline-list {
+            margin-top: 1rem;
+        }
+        .outline-item {
+            padding: 0.65rem 0.75rem;
+            cursor: pointer;
+            border-radius: var(--radius-sm);
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-weight: 500;
+        }
+        .outline-item:hover {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+        }
+        .outline-item.active {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(139, 92, 246, 0.1));
+            color: var(--accent-light);
+            font-weight: 600;
+            border-left: 3px solid var(--accent);
+        }
+        .outline-item.completed {
+            color: var(--success);
+        }
+        .outline-status {
+            font-size: 0.75rem;
+            width: 20px;
+            text-align: center;
+        }
+
+        /* Content Sections */
+        .content-section {
+            margin-bottom: 2.5rem;
+            animation: fadeIn 0.4s ease;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        .content-section h3 {
+            color: var(--accent-light);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--border);
+        }
+        .content-list {
+            margin: 1rem 0;
+            padding-left: 1.5rem;
+        }
+        .content-list li {
+            margin-bottom: 0.6rem;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+        .content-list li::marker {
+            color: var(--accent);
+        }
+        .tip-box {
+            background: rgba(59, 130, 246, 0.08);
+            border-left: 4px solid var(--accent);
+            padding: 1.25rem;
+            border-radius: var(--radius-sm);
+            margin: 1.5rem 0;
+        }
+        .tip-box strong {
+            color: var(--accent-light);
+        }
+        .warning-box {
+            background: rgba(245, 158, 11, 0.08);
+            border-left: 4px solid var(--warning);
+            padding: 1.25rem;
+            border-radius: var(--radius-sm);
+            margin: 1.5rem 0;
+        }
+        .danger-box {
+            background: rgba(239, 68, 68, 0.08);
+            border-left: 4px solid var(--danger);
+            padding: 1.25rem;
+            border-radius: var(--radius-sm);
+            margin: 1.5rem 0;
+        }
+        .tip-box ul,
+        .warning-box ul,
+        .danger-box ul {
+            margin-top: 0.5rem;
+            padding-left: 1.5rem;
+        }
+        .tip-box li,
+        .warning-box li,
+        .danger-box li {
+            margin-bottom: 0.25rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .lecture-navigation {
+            display: flex;
+            gap: 1rem;
+            justify-content: space-between;
+            margin-top: 2.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+        }
+
+        /* Notes */
+        .notes-area {
+            width: 100%;
+            min-height: 160px;
+            padding: 1rem;
+            background: var(--bg-tertiary);
+            border: 2px solid var(--border);
+            border-radius: var(--radius-sm);
+            color: var(--text-primary);
+            font-family: inherit;
+            resize: vertical;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+        .notes-area:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px var(--accent-glow);
+        }
+
+        /* Quiz */
+        .quiz-container {
+            padding: 1rem;
+        }
+        .quiz-progress {
+            margin-bottom: 1.5rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+        .quiz-question {
+            margin-bottom: 1.5rem;
+            font-size: 1.15rem;
+        }
+        .quiz-option {
+            padding: 1rem 1.25rem;
+            margin-bottom: 0.6rem;
+            background: var(--bg-tertiary);
+            border: 2px solid var(--border);
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-weight: 500;
+        }
+        .quiz-option:hover {
+            border-color: var(--accent);
+            background: rgba(59, 130, 246, 0.05);
+        }
+        .quiz-option.selected {
+            border-color: var(--accent);
+            background: rgba(59, 130, 246, 0.1);
+            box-shadow: 0 0 0 4px var(--accent-glow);
+        }
+        .quiz-option.correct {
+            border-color: var(--success);
+            background: rgba(16, 185, 129, 0.1);
+        }
+        .quiz-option.incorrect {
+            border-color: var(--danger);
+            background: rgba(239, 68, 68, 0.1);
+        }
+        .quiz-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        .quiz-results {
+            text-align: center;
+        }
+        .score-circle {
+            margin: 2rem auto;
+            display: inline-block;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.75);
+            z-index: 1000;
+            overflow-y: auto;
+            backdrop-filter: blur(4px);
+        }
+        .modal-content {
+            background: var(--bg-secondary);
+            margin: 4% auto;
+            padding: 2.5rem;
+            border-radius: var(--radius-lg);
+            max-width: 650px;
+            position: relative;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border);
+            animation: modalSlide 0.3s ease;
+        }
+        @keyframes modalSlide {
+            from {
+                opacity: 0;
+                transform: translateY(-30px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        .modal-close {
+            background: var(--bg-tertiary);
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+        .modal-close:hover {
+            background: var(--danger);
+            color: white;
+        }
+        .modal-body {
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+
+        /* SVG Charts */
+        .chart-svg {
+            width: 100%;
+            max-width: 600px;
+            display: block;
+            margin: 0 auto;
+            background: var(--bg-tertiary);
+            border-radius: var(--radius-sm);
+            padding: 1rem;
+        }
+        .diagram-container {
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        /* Notification */
+        .notification {
+            position: fixed;
+            top: 1.5rem;
+            right: 1.5rem;
+            padding: 1rem 1.5rem;
+            border-radius: var(--radius);
+            color: white;
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            box-shadow: var(--shadow-lg);
+            animation: slideInRight 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            font-weight: 500;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .notification-success {
+            background: linear-gradient(135deg, #059669, #10b981);
+        }
+        .notification-info {
+            background: linear-gradient(135deg, #4f46e5, #6366f1);
+        }
+        .notification-warning {
+            background: linear-gradient(135deg, #d97706, #f59e0b);
+        }
+        .notification button {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 1.2rem;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        /* Session Timer */
+        .session-timer {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+        }
+        .timer-card {
+            text-align: center;
+            padding: 2rem;
+        }
+        .timer-display {
+            font-size: 3.5rem;
+            margin: 1rem 0;
+        }
+        .timer-status {
+            display: inline-block;
+            padding: 0.4rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        .timer-status.active {
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--success);
+        }
+        .timer-status.inactive {
+            background: rgba(239, 68, 68, 0.15);
+            color: var(--danger);
+        }
+        .kill-zone-indicator {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%,
+            100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
+        }
+
+        /* Journal */
+        .journal-form {
+            display: grid;
+            gap: 1rem;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+        .form-group label {
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            padding: 0.8rem 1rem;
+            background: var(--bg-tertiary);
+            border: 2px solid var(--border);
+            border-radius: var(--radius-sm);
+            color: var(--text-primary);
+            font-family: inherit;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px var(--accent-glow);
+        }
+
+        /* Calculator */
+        .calc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+        .calc-result {
+            background: var(--bg-tertiary);
+            padding: 1.25rem;
+            border-radius: var(--radius-sm);
+            margin-top: 1rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border: 1px solid var(--border);
+        }
+        .calc-result strong {
+            color: var(--accent-light);
+            font-size: 1.3rem;
+        }
+
+        /* Glossary */
+        .glossary-grid {
+            display: grid;
+            gap: 1rem;
+        }
+        .glossary-item {
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .glossary-item:hover {
+            border-color: var(--accent);
+        }
+        .glossary-item h5 {
+            color: var(--accent-light);
+        }
+
+        /* Certificate */
+        .certificate-container {
+            background: var(--bg-secondary);
+            border: 4px solid var(--gold);
+            padding: 4rem;
+            text-align: center;
+            border-radius: var(--radius-xl);
+            position: relative;
+            overflow: hidden;
+        }
+        .certificate-container::before {
+            content: '';
+            position: absolute;
+            inset: 15px;
+            border: 2px solid var(--gold-light);
+            border-radius: var(--radius-lg);
+            pointer-events: none;
+            opacity: 0.5;
+        }
+        .certificate-seal {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 2rem;
+            background: linear-gradient(135deg, var(--gold), #d4a30a);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            box-shadow: 0 8px 30px rgba(240, 185, 11, 0.4);
+        }
+
+        /* Streak Counter */
+        .streak-flame {
+            display: inline-block;
+            animation: flame 0.5s infinite alternate;
+        }
+        @keyframes flame {
+            from {
+                transform: scale(1);
+            }
+            to {
+                transform: scale(1.2);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .sidebar {
+                width: 260px;
+            }
+            .main-content {
+                margin-left: 260px;
+            }
+            .lecture-view {
+                grid-template-columns: 1fr;
+            }
+            .lecture-sidebar {
+                display: none;
+            }
+        }
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+                width: 280px;
+            }
+            .sidebar.mobile-open {
+                transform: translateX(0);
+            }
+            .main-content {
+                margin-left: 0;
+            }
+            .sidebar.collapsed~.main-content {
+                margin-left: 0;
+            }
+            .content-area {
+                padding: 1.25rem;
+            }
+            .top-nav {
+                padding: 0.75rem 1rem;
+                flex-wrap: wrap;
+            }
+            .search-wrapper {
+                flex: 0 1 100%;
+                order: 3;
+                margin-top: 0.5rem;
+            }
+            h1 {
+                font-size: 1.75rem;
+            }
+            .grid-2,
+            .grid-3,
+            .grid-4 {
+                grid-template-columns: 1fr;
+            }
+            .certificate-container {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body class="dark-theme">
+    <!-- Mobile Overlay -->
+    <div id="mobileOverlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:99;" onclick="closeMobileSidebar()"></div>
+
+    <div class="app-container">
+        <!-- Premium Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <div class="logo-icon">SMC</div>
+                    <span class="logo-text"><span class="accent">SMC</span> ICT Academy</span>
+                </div>
+                <button class="sidebar-toggle" onclick="toggleSidebar()" title="Toggle Sidebar">◀</button>
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">📚 Learning</div>
+                    <a class="nav-item active" data-page="dashboard" onclick="navigateTo('dashboard')">
+                        <span class="nav-icon">📊</span><span>Dashboard</span>
+                    </a>
+                    <a class="nav-item" data-page="courses" onclick="navigateTo('courses')">
+                        <span class="nav-icon">🎓</span><span>Course Curriculum</span>
+                        <span class="sidebar-badge">15</span>
+                    </a>
+                    <a class="nav-item" data-page="playbook" onclick="navigateTo('playbook')">
+                        <span class="nav-icon">📖</span><span>Trading Playbook</span>
+                    </a>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">🛠️ Tools</div>
+                    <a class="nav-item" data-page="journal" onclick="navigateTo('journal')">
+                        <span class="nav-icon">📝</span><span>Trading Journal</span>
+                    </a>
+                    <a class="nav-item" data-page="calculator" onclick="navigateTo('calculator')">
+                        <span class="nav-icon">🧮</span><span>Calculators</span>
+                    </a>
+                    <a class="nav-item" data-page="timer" onclick="navigateTo('timer')">
+                        <span class="nav-icon">⏰</span><span>Session Timer</span>
+                    </a>
+                    <a class="nav-item" data-page="glossary" onclick="navigateTo('glossary')">
+                        <span class="nav-icon">📖</span><span>Glossary A-Z</span>
+                    </a>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">🏆 Achievement</div>
+                    <a class="nav-item" data-page="certificate" onclick="navigateTo('certificate')">
+                        <span class="nav-icon">🎖️</span><span>Certificate</span>
+                    </a>
+                    <a class="nav-item" data-page="stats" onclick="navigateTo('stats')">
+                        <span class="nav-icon">📈</span><span>Learning Stats</span>
+                    </a>
+                </div>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <div class="user-avatar">TS</div>
+                    <div class="user-details">
+                        <div class="user-name">Trading Student</div>
+                        <div class="user-role">SMC Trader</div>
+                    </div>
+                </div>
+                <div class="progress-bar-container">
+                    <div class="progress-label">
+                        <span>Course Progress</span>
+                        <span id="progressPercent">0%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="mainProgressBar" style="width:0%"></div>
+                    </div>
+                </div>
+                <button class="theme-toggle" onclick="toggleTheme()">
+                    🌓 <span>Toggle Theme</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="top-nav">
+                <button class="icon-btn mobile-menu-btn" onclick="toggleMobileSidebar()" style="display:none;" id="mobileMenuBtn">☰</button>
+                <div class="search-wrapper">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" class="search-input" placeholder="Search lectures, concepts, glossary..." id="searchInput"
+                    oninput="performSearch(this.value)">
+                    <span class="search-shortcut">⌘K</span>
+                </div>
+                <div class="top-nav-actions">
+                    <button class="icon-btn" onclick="showBookmarks()" title="Bookmarks">
+                        🔖 Bookmarks
+                        <span class="badge" id="bookmarkCount">0</span>
+                    </button>
+                    <button class="icon-btn" onclick="showNotes()" title="Notes">
+                        📝 Notes
+                    </button>
+                    <button class="icon-btn" onclick="navigateTo('timer')" title="Session Timer">
+                        ⏰ Kill Zones
+                    </button>
+                </div>
+            </header>
+
+            <div class="content-area" id="contentArea">
+                <!-- Dynamic content -->
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle"></h2>
+                <button class="modal-close" onclick="closeModal()">✕</button>
+            </div>
+            <div class="modal-body" id="modalBody"></div>
+        </div>
+    </div>
+
+</body>
+<script>
+    // ==================== COMPLETE COURSE DATA ====================
+    const courseData = {
+        modules: [
+            {
+                id: 1,
+                title: "Forex Fundamentals & Market Microstructure",
+                description: "Comprehensive foundation of Forex trading from absolute basics to understanding how the interbank market truly operates.",
+                estimatedHours: 10,
+                difficulty: "Beginner",
+                lectures: [
+                    {
+                        id: 1,
+                        title: "The Forex Market: A Complete Introduction",
+                        duration: 55,
+                        difficulty: "Beginner",
+                        description: "Deep dive into what Forex really is, who runs it, and how money flows through the global financial system.",
+                        diagram: "forexMarketStructure",
+                        chartExample: null,
+                        content: {
+                            sections: [{
+                                heading: "Understanding the Global Forex Market",
+                                paragraphs: [
+                                    "The Foreign Exchange Market, commonly known as Forex or FX, represents the largest and most liquid financial market in the world. With daily trading volumes exceeding $7.5 trillion as of 2024, it dwarfs all other financial markets combined, including stocks, futures, and cryptocurrencies.",
+                                    "Unlike centralized exchanges like the New York Stock Exchange, Forex operates as a decentralized over-the-counter (OTC) market. This means there is no central location where all trades are executed. Instead, trading occurs electronically through a global network of banks, financial institutions, and individual traders, connected by sophisticated electronic communication networks (ECNs).",
+                                    "The Forex market operates 24 hours a day, five days a week, starting with the Sydney session on Monday morning (Sunday evening in the Americas) and closing with the New York session on Friday afternoon. This continuous operation is possible because the market follows the sun around the globe through major financial centers: Sydney, Tokyo, London, and New York.",
+                                    "At its core, Forex trading involves the simultaneous buying of one currency and selling of another. Currencies are always traded in pairs, such as EUR/USD (Euro vs. US Dollar) or GBP/JPY (British Pound vs. Japanese Yen). The first currency listed is called the base currency, and the second is the quote currency. When you see EUR/USD at 1.0850, it means 1 Euro equals 1.0850 US Dollars."
+                                ],
+                                bulletPoints: [
+                                    "Forex is the largest financial market globally with $7.5T+ daily volume",
+                                    "Decentralized OTC market with no central exchange",
+                                    "Operates 24/5 across major financial centers worldwide",
+                                    "Currencies traded in pairs: Base Currency / Quote Currency",
+                                    "Major players: Central Banks, Commercial Banks, Hedge Funds, Corporations, Retail Traders",
+                                    "Accessible to retail traders through brokers and ECNs",
+                                    "Highly leveraged market offering significant opportunity and risk"
+                                ],
+                                tips: [
+                                    "Always remember the Forex market is decentralized - there's no single 'true' price. Different brokers may show slightly different prices based on their liquidity providers.",
+                                    "Focus initially on the major currency pairs. They offer the tightest spreads and most predictable behavior due to massive liquidity.",
+                                    "Understand that different trading sessions bring different volatility profiles. The London session typically sees the most movement.",
+                                    "Learn to read the economic calendar. Major news events can cause sudden, violent price movements that can either benefit or destroy your positions."
+                                ],
+                                commonMistakes: [
+                                    "Starting with exotic currency pairs before mastering the majors",
+                                    "Not understanding that your broker's price is derived from their liquidity providers, not a central exchange",
+                                    "Ignoring the impact of rollover/swaps on overnight positions",
+                                    "Trading during major news events without understanding the risks of slippage and spread widening"
+                                ]
+                            }, {
+                                heading: "The Hierarchy of Market Participants",
+                                paragraphs: [
+                                    "Understanding who participates in the Forex market and their motivations is absolutely crucial for Smart Money Concepts. The market has a clear hierarchy, and knowing where you fit and how the big players operate will transform your trading perspective.",
+                                    "At the top of the food chain are Central Banks. These institutions, like the Federal Reserve (Fed), European Central Bank (ECB), and Bank of Japan (BOJ), control monetary policy. They set interest rates, conduct open market operations, and sometimes directly intervene in currency markets. Their actions can cause massive, sustained trends or sudden violent reversals. Central banks don't trade for profit; they trade to achieve policy objectives like controlling inflation, managing economic growth, or maintaining currency stability.",
+                                    "Below central banks are the major Commercial Banks and Investment Banks. These are the true market makers - institutions like JP Morgan, Deutsche Bank, Citigroup, and UBS. They operate in the interbank market, trading massive volumes with each other. These banks provide liquidity to the entire market and have access to order flow information that retail traders can only dream of. When we talk about 'Smart Money' in SMC, we're primarily referring to these institutions and their trading desks.",
+                                    "Hedge Funds and Asset Managers form the next tier. These sophisticated investors manage billions of dollars and employ teams of analysts and traders. They use a combination of fundamental analysis, quantitative models, and technical analysis to generate returns. Hedge funds can take massive speculative positions that can influence currency prices, especially in less liquid pairs.",
+                                    "Large Corporations represent the non-speculative side of the market. Companies like Apple, Toyota, or Shell need to exchange currencies for international trade, paying suppliers, repatriating profits, or hedging against currency risk. Their orders are typically executed through banks and can be significant enough to move markets, especially at month-end or quarter-end when large rebalancing flows occur.",
+                                    "Finally, at the bottom of the pyramid, are Retail Traders like us. We trade through brokers who aggregate our orders and either pass them to liquidity providers or internalize them. Retail traders collectively represent a tiny fraction of daily Forex volume, perhaps 5-6%. However, Smart Money is keenly aware of where retail traders place their stops and entries, and they actively engineer price movements to take advantage of this predictable behavior."
+                                ],
+                                bulletPoints: [
+                                    "Central Banks: Control monetary policy, set interest rates, intervene in markets",
+                                    "Commercial/Investment Banks: True market makers, massive order flow, interbank market",
+                                    "Hedge Funds: Sophisticated speculators with billions in assets, trend creators",
+                                    "Corporations: Non-speculative, trade for business needs, month-end flows",
+                                    "Retail Traders: Small speculators, predictable behavior, liquidity providers for Smart Money"
+                                ]
+                            }]
+                        }
+                    },
+                    {
+                        id: 2,
+                        title: "Currency Pairs, Pips, and Price Action Basics",
+                        duration: 50,
+                        difficulty: "Beginner",
+                        description: "Master the fundamental building blocks of Forex price quotation and movement.",
+                        content: {
+                            sections: [{
+                                heading: "Understanding Currency Pairs and Quotation",
+                                paragraphs: [
+                                    "Every Forex transaction involves a currency pair. The first currency is the base currency, and the second is the quote currency. EUR/USD at 1.0850 means 1 Euro costs 1.0850 US Dollars. If you believe the Euro will strengthen against the Dollar, you buy EUR/USD (go long). If you think the Euro will weaken, you sell EUR/USD (go short).",
+                                    "Currency pairs are categorized into three groups: Majors, Minors (Crosses), and Exotics. Majors always include the US Dollar and are the most heavily traded. Minors are crosses between major currencies that don't include USD, like EUR/GBP or GBP/JPY. Exotics pair a major currency with a currency from a developing economy, like USD/TRY or EUR/ZAR."
+                                ],
+                                bulletPoints: [
+                                    "Majors: EUR/USD, USD/JPY, GBP/USD, USD/CHF, AUD/USD, USD/CAD, NZD/USD",
+                                    "Minors/Crosses: EUR/GBP, EUR/JPY, GBP/JPY, EUR/CHF, EUR/AUD",
+                                    "Exotics: USD/TRY, EUR/ZAR, USD/MXN, USD/SEK (high spreads, lower liquidity)",
+                                    "A Pip is the smallest standard price movement: 0.0001 for most pairs",
+                                    "A Pipette is 1/10 of a pip: 0.00001 for most pairs",
+                                    "JPY pairs: 1 pip = 0.01, 1 pipette = 0.001"
+                                ]
+                            }]
+                        }
+                    },
+                    {
+                        id: 3,
+                        title: "Liquidity: The Engine of Price Movement",
+                        duration: 60,
+                        difficulty: "Intermediate",
+                        description: "Comprehensive understanding of liquidity from an institutional perspective - the most important concept in SMC.",
+                        diagram: "liquidityConcepts",
+                        chartExample: "liquiditySweep",
+                        content: {
+                            sections: [{
+                                heading: "What is Liquidity in Forex?",
+                                paragraphs: [
+                                    "In financial markets, liquidity refers to the ability to execute large orders without causing significant price movement. A liquid market has many buyers and sellers at every price level, resulting in tight spreads and smooth price action. An illiquid market has few participants, wide spreads, and erratic price movement.",
+                                    "But in Smart Money Concepts, liquidity means something more specific and actionable. Liquidity represents clusters of orders - primarily stop losses and pending orders - that Smart Money targets to fill their own positions. Every time you place a stop loss, you're creating liquidity for someone else. Smart Money needs this liquidity to enter and exit their massive positions without causing adverse price movement against themselves.",
+                                    "Think about it: if JP Morgan wants to buy €500 million worth of EUR/USD, they can't just place a single market order. That would instantly drive the price up, and they'd end up paying much higher prices. Instead, they need sellers to absorb their buying. Where do they find these sellers? At areas where retail traders have placed their sell stops - below support levels, below recent swing lows. This is why price often sweeps below a support level, triggering stops (creating sell orders that fill the bank's buy order), and then immediately reverses and rallies.",
+                                    "This is the fundamental insight of SMC: price moves from areas of high liquidity to areas of low liquidity, and back again. Your job as an SMC trader is to identify where liquidity sits and position yourself on the right side of the institutional order flow."
+                                ],
+                                bulletPoints: [
+                                    "Buy Side Liquidity (BSL): Clusters of buy stop orders above resistance/swing highs",
+                                    "Sell Side Liquidity (SSL): Clusters of sell stop orders below support/swing lows",
+                                    "Internal Liquidity: Orders within the current trading range or dealing range",
+                                    "External Liquidity: Orders at the extremes of ranges, beyond obvious highs and lows",
+                                    "Engineered Liquidity: Price manipulation to create false breaks and trigger stops",
+                                    "EQH (Equal Highs): Multiple highs at same level = massive BSL above",
+                                    "EQL (Equal Lows): Multiple lows at same level = massive SSL below"
+                                ],
+                                tips: [
+                                    "Always identify where liquidity sits before considering a trade. Price is attracted to liquidity like a magnet.",
+                                    "The most obvious support/resistance levels usually hold the most liquidity because that's where most traders place their stops.",
+                                    "Double tops and double bottoms are classic liquidity-building patterns. The stops cluster just beyond the double level.",
+                                    "When you see equal highs or equal lows on any timeframe, mark them immediately. Price will likely sweep these levels."
+                                ]
+                            }, {
+                                heading: "Types of Liquidity Sweeps and Grabs",
+                                paragraphs: [
+                                    "A liquidity sweep occurs when price moves beyond an obvious level, triggers the clustered stops, and then immediately reverses. This is Smart Money 'sweeping' the available liquidity to fill their positions before moving price in the opposite direction.",
+                                    "A liquidity grab is similar but typically refers to a quick spike through a level on lower timeframes, often during news events or session opens. The key difference is the speed and duration of the break. Sweeps may take time to develop, while grabs are often instantaneous wicks that immediately reject.",
+                                    "Trendline liquidity is another crucial concept. As a trendline develops with multiple touches, traders place stops just beyond it. Smart Money will often engineer a false break of the trendline to trigger these stops before resuming the trend. This is why you often see a trendline break, only for price to immediately snap back and continue trending.",
+                                    "Internal range liquidity refers to the stops that accumulate within a trading range - above recent swing highs and below recent swing lows within the range. Before a range can break out, Smart Money often clears out this internal liquidity first, creating a 'spring' effect that powers the eventual breakout."
+                                ]
+                            }]
+                        }
+                    },
+                    {
+                        id: 4,
+                        title: "Trading Sessions, Kill Zones & Optimal Trading Times",
+                        duration: 55,
+                        difficulty: "Intermediate",
+                        description: "Master the timing of the Forex market with ICT Kill Zones and session dynamics.",
+                        content: {
+                            sections: [{
+                                    heading: "The Four Major Forex Sessions",
+                                    paragraphs: [
+                                        "The 24-hour Forex market is divided into four main trading sessions, each centered around a major financial hub. Understanding the characteristics of each session is essential for timing your trades effectively.",
+                                        "The Sydney Session (5 PM - 2 AM EST / 10 PM - 7 AM GMT) opens the trading week. It's typically the quietest session with lower volatility, but it sets the tone for the Asian session. AUD, NZD, and JPY pairs are most active.",
+                                        "The Tokyo/Asian Session (7 PM - 4 AM EST / 12 AM - 9 AM GMT) sees increased activity as Japanese and Asian markets come online. JPY pairs become very active. Important Japanese economic data is released during this session.",
+                                        "The London Session (3 AM - 12 PM EST / 8 AM - 5 PM GMT) is the most important session. London is the world's forex capital, handling approximately 43% of all forex transactions. This session brings the highest liquidity and often the biggest moves of the day. EUR, GBP, and CHF pairs are most active.",
+                                        "The New York Session (8 AM - 5 PM EST / 1 PM - 10 PM GMT) is the second most active. When London and New York overlap (8 AM - 12 PM EST), the market experiences peak liquidity and volatility. This overlap period offers the best trading opportunities."
+                                    ],
+                                    bulletPoints: [
+                                        "Sydney: 5 PM - 2 AM EST | Lower volatility, AUD/NZD pairs active",
+                                        "Tokyo: 7 PM - 4 AM EST | JPY pairs active, Asian economic data",
+                                        "London: 3 AM - 12 PM EST | Highest volume, EUR/GBP/CHF pairs active",
+                                        "New York: 8 AM - 5 PM EST | Second highest, USD pairs most active",
+                                        "London/NY Overlap: 8 AM - 12 PM EST | Peak liquidity and opportunity",
+                                        "Session Overlaps offer the highest probability trading environments"
+                                    ]
+                                },
+                                {
+                                    heading: "ICT Kill Zones: When Smart Money is Most Active",
+                                    paragraphs: [
+                                        "Michael Huddleston (ICT) identified specific time windows during each session when institutional activity peaks. These 'Kill Zones' represent periods when Smart Money is most actively engineering liquidity and executing their positions. Aligning your trading with these times dramatically increases your probability of success.",
+                                        "The Asian Kill Zone (8 PM - 10 PM EST) corresponds to the Tokyo open. Smart Money often uses this period to set up the day's range and engineer initial liquidity grabs. The Asian session frequently creates the high or low of the day that later sessions will target.",
+                                        "The London Open Kill Zone (2 AM - 5 AM EST) is arguably the most important. This is when massive institutional positions are established. The London Judas Swing pattern frequently occurs during this window - an initial move that grabs liquidity before the real session move begins.",
+                                        "The New York Open Kill Zone (8 AM - 11 AM EST) is another prime window. With both London and New York active, massive volumes flow through the market. The NY session often reverses or extends the London session's move.",
+                                        "The London Close Kill Zone (10 AM - 12 PM EST) marks the end of the London session. Smart Money often engineers reversals or profit-taking moves during this window as European desks close their books.",
+                                        "The Afternoon Kill Zone (2 PM - 4 PM EST) represents the final push of the New York session. Late-session moves can set up the next day's Asian session."
+                                    ],
+                                    bulletPoints: [
+                                        "Asian Kill Zone: 8 PM - 10 PM EST | Tokyo open, daily range setup",
+                                        "London Open Kill Zone: 2 AM - 5 AM EST | Prime window, Judas Swing patterns",
+                                        "New York Open Kill Zone: 8 AM - 11 AM EST | Peak volume, session overlap",
+                                        "London Close Kill Zone: 10 AM - 12 PM EST | Reversal setups, profit-taking",
+                                        "Afternoon Kill Zone: 2 PM - 4 PM EST | Late session continuation/reversal"
+                                    ],
+                                    tips: [
+                                        "The most reliable Kill Zone is the London Open (2-5 AM EST). Focus your trading here if you can only trade one session.",
+                                        "Wait for the initial Judas Swing during Kill Zones before committing to a direction. Don't get caught in the manipulation.",
+                                        "The first hour of each Kill Zone often sees the most manipulation. Be patient and wait for the real move to establish."
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                id: 2,
+                title: "Market Structure & Price Action Mastery",
+                description: "Master the art of reading market structure like an institutional trader. Learn to identify trends, reversals, and key structural points that Smart Money watches.",
+                estimatedHours: 12,
+                difficulty: "Intermediate",
+                lectures: [{
+                    id: 5,
+                    title: "Market Structure Fundamentals: HH, HL, LH, LL",
+                    duration: 60,
+                    difficulty: "Intermediate",
+                    description: "The absolute foundation of all technical analysis - understanding swing points and market structure.",
+                    chartExample: "marketStructure",
+                    content: {
+                        sections: [{
+                            heading: "The Building Blocks of Price Action",
+                            paragraphs: [
+                                "Market structure is the framework upon which all technical analysis is built. It tells you whether the market is trending, consolidating, or reversing. Without a solid understanding of structure, you're essentially trading blind, unable to determine the market's directional bias.",
+                                "A bullish market structure is characterized by a series of Higher Highs (HH) and Higher Lows (HL). Each successive peak is higher than the previous peak, and each pullback low is higher than the previous pullback low. This staircase pattern indicates that buyers are in control, consistently pushing price to new highs and defending higher support levels.",
+                                "A bearish market structure shows the opposite: Lower Highs (LH) and Lower Lows (LL). Each rally fails to reach the previous peak, and each decline breaks below the previous trough. This descending staircase indicates sellers are in control.",
+                                "When market structure becomes unclear - when you see a mix of HH and LL, or prices overlapping - you're likely in a consolidation or ranging market. Smart Money often uses these periods to accumulate or distribute positions before the next trending move."
+                            ],
+                            bulletPoints: [
+                                "Higher High (HH): A peak higher than the most recent peak",
+                                "Higher Low (HL): A trough higher than the most recent trough",
+                                "Lower High (LH): A peak lower than the most recent peak",
+                                "Lower Low (LL): A trough lower than the most recent trough",
+                                "Bullish Structure = HH + HL (uptrend)",
+                                "Bearish Structure = LH + LL (downtrend)",
+                                "Mixed Structure = Consolidation/Range"
+                            ]
+                        }, {
+                            heading: "Identifying Swing Points Correctly",
+                            paragraphs: [
+                                "A swing high is formed when a candlestick has a higher high than both the candle before it and the candle after it. On a chart, this appears as a peak with lower highs on both sides. A swing low is the opposite: a candle with a lower low than both adjacent candles.",
+                                "The strength of a swing point matters. A 'strong high' is a swing high that has been tested multiple times from below but held as resistance. Each test that fails to break through adds to its significance. When it finally breaks, it often triggers a significant move as accumulated buy stops above are triggered.",
+                                "A 'weak high' is one that barely qualifies as a swing high - perhaps the price immediately retraced after forming it. Weak highs are easily broken and don't carry the same weight in analysis."
+                            ],
+                            tips: [
+                                "Always wait for a candle to close before confirming a swing point. Intra-candle wicks can be deceptive.",
+                                "Mark your swing highs and lows on multiple timeframes. Higher timeframe swings carry more significance.",
+                                "The most recent swing high and swing low define your immediate trading range."
+                            ]
+                        }]
+                    }
+                }, {
+                    id: 6,
+                    title: "Break of Structure (BOS) & Change of Character (CHOCH)",
+                    duration: 65,
+                    difficulty: "Intermediate",
+                    description: "Learn to identify trend continuation and reversal signals that institutional traders use.",
+                    content: {
+                        sections: [{
+                            heading: "Break of Structure: Confirming Trend Continuation",
+                            paragraphs: [
+                                "A Break of Structure (BOS) occurs when price breaks beyond a previous structural point in the direction of the prevailing trend. In an uptrend, BOS happens when price breaks and closes above a previous Higher High. In a downtrend, BOS occurs when price breaks and closes below a previous Lower Low.",
+                                "BOS is the ultimate confirmation that the trend remains intact. Each BOS represents Smart Money's willingness to push price beyond previous extremes, indicating they still have orders to fill in the trend direction. Multiple BOS in sequence confirms strong momentum.",
+                                "However, BOS can also signal trend exhaustion. When BOS occurs but the follow-through is weak - the break is small, or price immediately reverses - it may indicate that Smart Money is distributing (selling) into the breakout rather than continuing to accumulate."
+                            ]
+                        }, {
+                            heading: "Change of Character: Spotting Reversals Early",
+                            paragraphs: [
+                                "Change of Character (CHOCH), sometimes called Market Structure Shift (MSS), is the first structural indication that a trend may be ending. A bullish CHOCH occurs in a downtrend when price breaks above a previous Lower High. This break of a bearish structural point suggests that sellers are losing control and buyers are stepping in.",
+                                "CHOCH is significant because it represents the first time in the current trend that price has managed to violate the structural pattern. It doesn't guarantee a reversal - trends often resume after a CHOCH - but it's a warning sign that the trend is weakening.",
+                                "Smart Money often engineers CHOCH patterns to trigger buy stops above recent swing highs before the actual move higher begins. Understanding this allows you to position for the reversal rather than being caught in the manipulation."
+                            ],
+                            commonMistakes: [
+                                "Entering immediately on CHOCH without waiting for confirmation like a higher low to form",
+                                "Confusing a simple pullback within a trend for actual CHOCH",
+                                "Not considering higher timeframe structure - a CHOCH on M15 may be just a pullback on H4"
+                            ]
+                        }]
+                    }
+                }]
+            },
+            {
+                id: 3,
+                title: "Order Blocks & Institutional Order Flow",
+                description: "Identify where institutions place their orders. Master Order Blocks, Mitigation Blocks, and Breaker Blocks for precise entries.",
+                estimatedHours: 14,
+                difficulty: "Intermediate",
+                lectures: [{
+                    id: 7,
+                    title: "Order Blocks: The Footprint of Smart Money",
+                    duration: 60,
+                    difficulty: "Intermediate",
+                    description: "Learn to identify and trade from institutional order blocks with precision.",
+                    chartExample: "bullishOB",
+                    content: {
+                        sections: [{
+                            heading: "What Are Order Blocks?",
+                            paragraphs: [
+                                "An Order Block (OB) is a specific price zone where institutional traders have placed large pending orders or accumulated significant positions. Think of it as the 'scene of the crime' - the last area where price consolidated before making a strong directional move.",
+                                "A Bullish Order Block is identified as the last down candle (or small consolidation of down candles) before a strong bullish impulse. The logic is simple: institutions accumulated long positions in this zone, absorbing sell orders, before aggressively pushing price higher. When price returns to this zone, there's a high probability that unfilled institutional orders will cause another bullish reaction.",
+                                "A Bearish Order Block is the last up candle before a strong bearish impulse. Institutions distributed short positions here, absorbing buy orders, before aggressively pushing price lower. Retests of this zone offer high-probability short entries.",
+                                "The key insight: Order Blocks work because institutions rarely fill their entire intended position in one move. They leave residual orders at their initial entry zone. When price returns, these unfilled orders are triggered, creating another move in the original direction."
+                            ],
+                            bulletPoints: [
+                                "Bullish OB: Last down candle(s) before a strong bullish impulse move",
+                                "Bearish OB: Last up candle(s) before a strong bearish impulse move",
+                                "Order Blocks represent zones of institutional accumulation/distribution",
+                                "The OB zone extends from the candle's open to its wick extreme",
+                                "Valid OBs create strong, clean moves away from them",
+                                "Invalid OBs are those that price immediately trades through"
+                            ]
+                        }]
+                    }
+                }, {
+                    id: 8,
+                    title: "Fair Value Gaps & Price Imbalances",
+                    duration: 55,
+                    difficulty: "Intermediate",
+                    description: "Master Fair Value Gaps, Inverse FVGs, and Balanced Price Ranges.",
+                    chartExample: "fvg",
+                    content: {
+                        sections: [{
+                            heading: "Understanding Fair Value Gaps",
+                            paragraphs: [
+                                "A Fair Value Gap (FVG) occurs when price moves so aggressively that it leaves behind an imbalance - a price zone where little to no trading occurred. On a three-candle sequence, an FVG exists when the wicks of candle 1 and candle 3 do not overlap, creating a gap in price delivery.",
+                                "The market has a natural tendency to seek balance and efficiency. When price leaves an FVG, it often returns to 'rebalance' or 'mitigate' this inefficiency. This retracement into the FVG provides high-probability entry opportunities aligned with institutional order flow.",
+                                "A BISI (Buyside Imbalance Sellside Inefficiency) is a bullish FVG. It forms during aggressive buying when price gaps upward. A SIBI (Sellside Imbalance Buyside Inefficiency) is a bearish FVG formed during aggressive selling.",
+                                "The Consequent Encroachment (CE) of an FVG is its 50% level. Price often trades into the FVG but reverses at or near the CE. This level serves as a refined entry point within the FVG zone."
+                            ],
+                            bulletPoints: [
+                                "FVG: Price gap between non-consecutive candle wicks",
+                                "BISI: Bullish FVG formed during aggressive buying",
+                                "SIBI: Bearish FVG formed during aggressive selling",
+                                "IFVG: Inverse FVG - a failed FVG that flips support/resistance",
+                                "Consequent Encroachment (CE): 50% level of the FVG",
+                                "BPR (Balanced Price Range): Zone where bullish and bearish FVGs overlap"
+                            ]
+                        }]
+                    }
+                }]
+            },
+            {
+                id: 4,
+                title: "Premium, Discount & The PD Array Matrix",
+                description: "Master the art of buying at discount and selling at premium using the complete PD Array framework.",
+                estimatedHours: 10,
+                difficulty: "Advanced",
+                lectures: [{
+                    id: 9,
+                    title: "The Dealing Range: Premium & Discount Zones",
+                    duration: 50,
+                    difficulty: "Advanced",
+                    description: "Understand how Smart Money uses the dealing range to find optimal entry zones.",
+                    content: {
+                        sections: [{
+                            heading: "Price Delivery Within Dealing Ranges",
+                            paragraphs: [
+                                "Every significant price swing creates a dealing range. By dividing this range using the 50% equilibrium level, we can identify where price is 'expensive' (premium) and where it's 'cheap' (discount). Smart Money buys at discount and sells at premium - it's that simple.",
+                                "In an uptrend, you want to look for buying opportunities in the discount zone of the most recent dealing range (below 50%). The best entries occur between the 62% and 79% retracement levels, known as the Optimal Trade Entry (OTE) zone.",
+                                "In a downtrend, you want to sell in the premium zone (above 50%), with the OTE zone again being the ideal area for entries.",
+                                "The PD Array Matrix combines Order Blocks, FVGs, and Premium/Discount analysis to identify the highest-probability entry zones. When an OB or FVG forms within the discount zone of an uptrend, it carries significantly more weight than one in the premium zone."
+                            ],
+                            bulletPoints: [
+                                "Premium Zone: Upper 50% of dealing range (sell zone in downtrends)",
+                                "Discount Zone: Lower 50% of dealing range (buy zone in uptrends)",
+                                "Equilibrium: 50% level, point of balance where price may react",
+                                "OTE Zone: 61.8% to 79% retracement, optimal entry area",
+                                "PD Array Matrix: Combining OB, FVG, and P/D for high-probability setups"
+                            ]
+                        }]
+                    }
+                }]
+            },
+            {
+                id: 5,
+                title: "ICT Power of Three, AMD & Daily Cycle",
+                description: "Master the daily cycle of Accumulation, Manipulation, and Distribution that Smart Money executes every single day.",
+                estimatedHours: 8,
+                difficulty: "Advanced",
+                lectures: [{
+                    id: 10,
+                    title: "The Power of Three: AMD Cycle Mastery",
+                    duration: 55,
+                    difficulty: "Advanced",
+                    description: "Understand and trade the complete daily cycle of institutional price delivery.",
+                    content: {
+                        sections: [{
+                            heading: "Accumulation, Manipulation, Distribution",
+                            paragraphs: [
+                                "The Power of Three (PO3), also known as the AMD cycle, describes how Smart Money operates on a daily basis. Virtually every significant daily price move can be broken down into three distinct phases: Accumulation, Manipulation, and Distribution.",
+                                "Phase 1 - Accumulation: During low-volatility periods (often the Asian session or early London), Smart Money quietly builds positions. Price consolidates in a range, showing no clear direction. This is when the 'smart' money is doing the exact opposite of what the market appears to be doing - buying when it looks weak, selling when it looks strong.",
+                                "Phase 2 - Manipulation: Smart Money engineers a false move, typically in the opposite direction of their intended distribution. This is the 'Judas Swing' - a move that takes out obvious stops and sucks in retail traders in the wrong direction. If Smart Money wants to go long, they'll first push price down to trigger sell stops (creating liquidity for their buys) and to create a 'bargain' entry price.",
+                                "Phase 3 - Distribution: The real move happens. Price expands aggressively in the direction Smart Money intended. This is the trend day, the expansion phase where the big money is made. Retail traders who were trapped in the manipulation phase are forced to cover, adding fuel to the move."
+                            ],
+                            bulletPoints: [
+                                "Phase 1 - Accumulation: Quiet range, building positions, low volatility",
+                                "Phase 2 - Manipulation: False breakout, Judas Swing, liquidity engineering",
+                                "Phase 3 - Distribution: The real move, trend expansion, profit taking",
+                                "Each phase serves a specific institutional purpose",
+                                "The manipulation phase creates the best entry opportunities"
+                            ],
+                            tips: [
+                                "Look for the AMD cycle to play out on multiple timeframes simultaneously",
+                                "The manipulation phase often aligns with Kill Zones - especially London and NY opens",
+                                "Don't enter during accumulation. Wait for the manipulation to complete, then enter for the distribution"
+                            ]
+                        }]
+                    }
+                }]
+            }
+        ]
+    };
+
+    const glossaryData = [
+        { term: "AMD", definition: "Accumulation, Manipulation, Distribution - The three phases of Smart Money's daily cycle." },
+        { term: "BISI", definition: "Buyside Imbalance Sellside Inefficiency - A bullish Fair Value Gap formed during aggressive buying." },
+        { term: "BOS", definition: "Break of Structure - Price breaking a previous swing point in the direction of the trend, confirming continuation." },
+        { term: "BPR", definition: "Balanced Price Range - Zone where bullish and bearish Fair Value Gaps overlap, creating strong support/resistance." },
+        { term: "BSL", definition: "Buy Side Liquidity - Clusters of buy stop orders above resistance levels and swing highs." },
+        { term: "CHOCH", definition: "Change of Character - Structural break signaling potential trend reversal when price violates the trend's swing pattern." },
+        { term: "CE", definition: "Consequent Encroachment - The 50% level of a Fair Value Gap, often serving as a precise entry point." },
+        { term: "EQL", definition: "Equal Lows - Multiple swing lows at the same price level, indicating massive sell side liquidity below." },
+        { term: "EQH", definition: "Equal Highs - Multiple swing highs at the same price level, indicating massive buy side liquidity above." },
+        { term: "FVG", definition: "Fair Value Gap - Price inefficiency created by aggressive institutional trading, often revisited for rebalancing." },
+        { term: "HH", definition: "Higher High - A peak higher than the previous peak, confirming bullish market structure." },
+        { term: "HL", definition: "Higher Low - A trough higher than the previous trough, confirming bullish market structure." },
+        { term: "ICT", definition: "Inner Circle Trader - Michael Huddleston, creator of the Smart Money Concepts trading methodology." },
+        { term: "IFVG", definition: "Inverse Fair Value Gap - A failed FVG that now acts as support (previously resistance) or vice versa." },
+        { term: "LH", definition: "Lower High - A peak lower than the previous peak, confirming bearish market structure." },
+        { term: "LL", definition: "Lower Low - A trough lower than the previous trough, confirming bearish market structure." },
+        { term: "MSS", definition: "Market Structure Shift - Change in market structure indicating potential trend reversal (similar to CHOCH)." },
+        { term: "OB", definition: "Order Block - Price zone where institutions accumulated or distributed large positions, visible as the last candle before a strong move." },
+        { term: "OTE", definition: "Optimal Trade Entry - The 61.8% to 79% Fibonacci retracement zone within a dealing range." },
+        { term: "PD Array", definition: "Premium/Discount Array - Framework combining OB, FVG, and P/D analysis for high-probability trade setups." },
+        { term: "PO3", definition: "Power of Three - The AMD cycle describing Smart Money's daily price delivery mechanism." },
+        { term: "SIBI", definition: "Sellside Imbalance Buyside Inefficiency - A bearish Fair Value Gap formed during aggressive selling." },
+        { term: "SMC", definition: "Smart Money Concepts - Trading methodology based on understanding and following institutional order flow." },
+        { term: "SMT", definition: "Smart Money Technique - Divergence analysis between correlated assets to identify institutional activity." },
+        { term: "SSL", definition: "Sell Side Liquidity - Clusters of sell stop orders below support levels and swing lows." }
+    ];
+
+    const quizData = {
+        1: {
+            questions: [
+                { question: "What is the approximate daily trading volume of the Forex market?", options: ["$1 trillion",
+                        "$3 trillion", "Over $7.5 trillion", "$500 billion"
+                    ], correct: 2 },
+                { question: "Which currency pair is the most traded globally?", options: ["GBP/USD", "EUR/USD",
+                        "USD/JPY", "USD/CHF"
+                    ], correct: 1 },
+                { question: "What type of market is Forex?", options: ["Centralized Exchange",
+                        "Decentralized OTC Market", "Futures Market", "Stock Exchange"
+                    ], correct: 1 },
+                { question: "Who sits at the TOP of the Forex market hierarchy?", options: ["Retail Traders",
+                        "Hedge Funds", "Central Banks", "Corporations"
+                    ], correct: 2 },
+                { question: "What does a currency pair's 'base currency' represent?", options: [
+                        "The second currency listed", "The currency being quoted", "The first currency listed",
+                        "The settlement currency"
+                    ], correct: 2 }
+            ]
+        },
+        7: {
+            questions: [
+                { question: "What is a Bullish Order Block?", options: [
+                        "Any green candle on the chart", "The last down candle before a strong bullish move",
+                        "A round number support level", "The highest candle in a range"
+                    ], correct: 1 },
+                { question: "Why do Order Blocks work as support/resistance?", options: [
+                        "Because they're round numbers", "Because institutions leave unfilled orders at their entry zones",
+                        "Because of Fibonacci levels", "Because of moving averages"
+                    ], correct: 1 },
+                { question: "A Bearish Order Block is identified as:", options: [
+                        "The last up candle before a strong bearish impulse", "Any red candle",
+                        "A double top pattern", "A trendline break"
+                    ], correct: 0 }
+            ]
+        }
+    };
+
+    // ==================== SVG DIAGRAMS ====================
+    const SVGDiagrams = {
+        forexMarketStructure: `<svg viewBox="0 0 600 300" class="chart-svg">
+        <rect width="600" height="300" fill="var(--bg-tertiary)" rx="8"/>
+        <text x="300" y="30" text-anchor="middle" fill="var(--text-primary)" font-size="16" font-weight="bold">Global Forex Market Structure</text>
+        <circle cx="300" cy="160" r="70" fill="none" stroke="var(--accent)" stroke-width="2.5"/>
+        <circle cx="300" cy="160" r="50" fill="rgba(59,130,246,0.08)"/>
+        <text x="300" y="155" text-anchor="middle" fill="var(--text-primary)" font-size="13" font-weight="bold">Interbank</text>
+        <text x="300" y="175" text-anchor="middle" fill="var(--text-secondary)" font-size="11">Market Core</text>
+        <circle cx="150" cy="95" r="35" fill="var(--bg-card)" stroke="var(--border)" stroke-width="1.5"/>
+        <text x="150" y="100" text-anchor="middle" fill="var(--text-primary)" font-size="10" font-weight="bold">Central Banks</text>
+        <circle cx="450" cy="95" r="35" fill="var(--bg-card)" stroke="var(--border)" stroke-width="1.5"/>
+        <text x="450" y="100" text-anchor="middle" fill="var(--text-primary)" font-size="10" font-weight="bold">Hedge Funds</text>
+        <circle cx="150" cy="225" r="35" fill="var(--bg-card)" stroke="var(--border)" stroke-width="1.5"/>
+        <text x="150" y="230" text-anchor="middle" fill="var(--text-primary)" font-size="10" font-weight="bold">Corporations</text>
+        <circle cx="450" cy="225" r="35" fill="var(--bg-card)" stroke="var(--accent)" stroke-width="2"/>
+        <text x="450" y="225" text-anchor="middle" fill="var(--accent-light)" font-size="10" font-weight="bold">Retail Traders</text>
+        <text x="450" y="245" text-anchor="middle" fill="var(--text-tertiary)" font-size="9">(That's Us!)</text>
+        <line x1="185" y1="105" x2="250" y2="135" stroke="var(--text-tertiary)" stroke-width="1" stroke-dasharray="4"/>
+        <line x1="415" y1="105" x2="350" y2="135" stroke="var(--text-tertiary)" stroke-width="1" stroke-dasharray="4"/>
+        <line x1="185" y1="215" x2="250" y2="185" stroke="var(--text-tertiary)" stroke-width="1" stroke-dasharray="4"/>
+        <line x1="415" y1="215" x2="350" y2="185" stroke="var(--accent)" stroke-width="1.5" stroke-dasharray="4"/>
+      </svg>`,
+        liquidityConcepts: `<svg viewBox="0 0 600 300" class="chart-svg">
+        <rect width="600" height="300" fill="var(--bg-tertiary)" rx="8"/>
+        <text x="300" y="25" text-anchor="middle" fill="var(--text-primary)" font-size="16" font-weight="bold">Liquidity Concepts: Buy Side & Sell Side</text>
+        <line x1="60" y1="180" x2="540" y2="180" stroke="var(--warning)" stroke-width="1.5" stroke-dasharray="6,3"/>
+        <text x="550" y="184" fill="var(--warning)" font-size="11" font-weight="bold">BSL</text>
+        <rect x="80" y="170" width="55" height="20" fill="rgba(240,185,11,0.2)" stroke="var(--gold)" stroke-width="1"/>
+        <rect x="180" y="170" width="55" height="20" fill="rgba(240,185,11,0.2)" stroke="var(--gold)" stroke-width="1"/>
+        <rect x="280" y="170" width="55" height="20" fill="rgba(240,185,11,0.2)" stroke="var(--gold)" stroke-width="1"/>
+        <text x="107" y="184" text-anchor="middle" fill="var(--gold)" font-size="9">EQH</text>
+        <text x="207" y="184" text-anchor="middle" fill="var(--gold)" font-size="9">EQH</text>
+        <text x="307" y="184" text-anchor="middle" fill="var(--gold)" font-size="9">EQH</text>
+        <line x1="60" y1="100" x2="540" y2="100" stroke="var(--danger)" stroke-width="1.5" stroke-dasharray="6,3"/>
+        <text x="550" y="104" fill="var(--danger)" font-size="11" font-weight="bold">SSL</text>
+        <path d="M 160 210 Q 200 160 260 210 T 360 210" fill="none" stroke="var(--accent)" stroke-width="2.5"/>
+        <polygon points="360,210 355,200 365,200" fill="var(--accent)"/>
+        <text x="260" y="240" text-anchor="middle" fill="var(--accent-light)" font-size="12" font-weight="bold">Price drawn to liquidity →</text>
+      </svg>`
+    };
+
+    // ==================== APP STATE ====================
+    let currentModule = null;
+    let currentLecture = null;
+    let currentPage = 'dashboard';
+    let searchTimeout;
+
+    function getUserData() {
+        let data = localStorage.getItem('smc_academy_pro');
+        if (!data) {
+            data = {
+                completedLectures: [],
+                notes: {},
+                bookmarks: [],
+                quizScores: {},
+                journalEntries: [],
+                theme: 'dark',
+                streak: 0,
+                lastStudyDate: null,
+                totalStudyTime: 0,
+                xp: 0,
+                level: 1
+            };
+            saveUserData(data);
+        }
+        return JSON.parse(data);
+    }
+
+    function saveUserData(data) {
+        localStorage.setItem('smc_academy_pro', JSON.stringify(data));
+    }
+
+    function showNotification(message, type = 'info') {
+        const notification = document.createElement('div');
+        notification.className = `notification notification-${type}`;
+        notification.innerHTML = `<span>${message}</span><button onclick="this.parentElement.remove()">✕</button>`;
+        document.body.appendChild(notification);
+        setTimeout(() => { if (notification.parentElement) notification.remove(); }, 3500);
+    }
+
+    function closeModal() {
+        document.getElementById('modal').style.display = 'none';
+    }
+
+    function openModal(title, content) {
+        document.getElementById('modalTitle').textContent = title;
+        document.getElementById('modalBody').innerHTML = content;
+        document.getElementById('modal').style.display = 'block';
+    }
+
+    // ==================== NAVIGATION ====================
+    function navigateTo(page) {
+        currentPage = page;
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.classList.remove('active');
+            if (item.dataset.page === page) item.classList.add('active');
+        });
+
+        const content = document.getElementById('contentArea');
+        switch (page) {
+            case 'dashboard':
+                loadDashboard();
+                break;
+            case 'courses':
+                loadCourseOverview();
+                break;
+            case 'journal':
+                loadJournal();
+                break;
+            case 'calculator':
+                loadCalculator();
+                break;
+            case 'glossary':
+                loadGlossary();
+                break;
+            case 'timer':
+                loadSessionTimer();
+                break;
+            case 'certificate':
+                loadCertificate();
+                break;
+            case 'playbook':
+                loadPlaybook();
+                break;
+            case 'stats':
+                loadStats();
+                break;
+            default:
+                loadDashboard();
+        }
+        updateProgressUI();
+        window.scrollTo(0, 0);
+    }
+
+    function toggleSidebar() {
+        document.getElementById('sidebar').classList.toggle('collapsed');
+    }
+
+    function toggleMobileSidebar() {
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('mobileOverlay');
+        sidebar.classList.toggle('mobile-open');
+        overlay.style.display = sidebar.classList.contains('mobile-open') ? 'block' : 'none';
+    }
+
+    function closeMobileSidebar() {
+        document.getElementById('sidebar').classList.remove('mobile-open');
+        document.getElementById('mobileOverlay').style.display = 'none';
+    }
+
+    function toggleTheme() {
+        const body = document.body;
+        const data = getUserData();
+        if (body.classList.contains('dark-theme')) {
+            body.classList.remove('dark-theme');
+            body.classList.add('light-theme');
+            data.theme = 'light';
+        } else {
+            body.classList.remove('light-theme');
+            body.classList.add('dark-theme');
+            data.theme = 'dark';
+        }
+        saveUserData(data);
+    }
+
+    // ==================== PROGRESS ====================
+    function calculateProgress() {
+        const total = courseData.modules.reduce((sum, m) => sum + m.lectures.length, 0);
+        const done = getUserData().completedLectures.length;
+        return Math.round((done / total) * 100);
+    }
+
+    function updateProgressUI() {
+        const pct = calculateProgress();
+        document.getElementById('mainProgressBar').style.width = pct + '%';
+        document.getElementById('progressPercent').textContent = pct + '%';
+        document.getElementById('bookmarkCount').textContent = getUserData().bookmarks.length;
+    }
+
+    function updateStudyStreak() {
+        const data = getUserData();
+        const today = new Date().toDateString();
+        if (data.lastStudyDate === today) return;
+        const yesterday = new Date(Date.now() - 86400000).toDateString();
+        if (data.lastStudyDate === yesterday) {
+            data.streak++;
+        } else if (data.lastStudyDate !== today) {
+            data.streak = 1;
+        }
+        data.lastStudyDate = today;
+        data.xp += 10;
+        if (data.xp >= data.level * 100) {
+            data.level++;
+            data.xp = 0;
+            showNotification(`🎉 Level Up! You're now Level ${data.level}!`, 'success');
+        }
+        saveUserData(data);
+    }
+
+    // ==================== DASHBOARD ====================
+    function loadDashboard() {
+        const data = getUserData();
+        const progress = calculateProgress();
+        const completedToday = data.lastStudyDate === new Date().toDateString();
+        const content = document.getElementById('contentArea');
+
+        content.innerHTML = `
+        <div class="animate-fade-in">
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;">
+            <div>
+              <h1 style="margin-bottom:0.5rem;">Welcome Back, Trader</h1>
+              <p style="font-size:1.1rem;">Continue your journey to mastering institutional trading</p>
+            </div>
+            <div class="card card-glass" style="text-align:center;min-width:120px;">
+              <div style="font-size:2rem;">${data.streak > 0 ? '🔥' : '📚'}</div>
+              <div style="font-size:1.5rem;font-weight:800;color:var(--accent-light);">${data.streak}</div>
+              <div style="font-size:0.8rem;color:var(--text-tertiary);">Day Streak</div>
+            </div>
+          </div>
+          
+          <div class="grid grid-4 mt-4">
+            <div class="card card-glass stat-card">
+              <div class="stat-icon">📊</div>
+              <div class="stat-value">${progress}%</div>
+              <div class="stat-label">Course Progress</div>
+            </div>
+            <div class="card card-glass stat-card">
+              <div class="stat-icon">✅</div>
+              <div class="stat-value">${data.completedLectures.length}</div>
+              <div class="stat-label">Lectures Done</div>
+            </div>
+            <div class="card card-glass stat-card">
+              <div class="stat-icon">⭐</div>
+              <div class="stat-value">${data.level}</div>
+              <div class="stat-label">Level</div>
+              <div class="stat-change up">${data.xp}/100 XP</div>
+            </div>
+            <div class="card card-glass stat-card">
+              <div class="stat-icon">📝</div>
+              <div class="stat-value">${data.journalEntries.length}</div>
+              <div class="stat-label">Journal Trades</div>
+            </div>
+          </div>
+
+          <h3 class="mt-4">📚 Continue Learning</h3>
+          <div class="grid grid-2 mt-3">
+            ${courseData.modules.slice(0, 4).map(m => {
+              const done = m.lectures.filter(l => data.completedLectures.includes(l.id)).length;
+              const pct = Math.round((done / m.lectures.length) * 100);
+              return `<div class="card course-card" onclick="loadModule(${m.id})" style="cursor:pointer">
+                <div class="module-number">MODULE ${m.id}</div>
+                <h4>${m.title}</h4>
+                <p style="font-size:0.85rem;">${m.description.substring(0, 80)}...</p>
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-top:1rem;">
+                  <span class="badge-tag badge-primary">${m.lectures.length} Lectures</span>
+                  <span style="font-size:0.85rem;color:var(--text-tertiary);">${pct}%</span>
+                </div>
+                <div class="progress-bar mt-2"><div class="progress-fill" style="width:${pct}%"></div></div>
+              </div>`;
+            }).join('')}
+          </div>
+
+          <h3 class="mt-4">🛠️ Quick Tools</h3>
+          <div class="grid grid-3 mt-3">
+            <div class="card" onclick="navigateTo('calculator')" style="cursor:pointer">
+              <h5>🧮 Position Size Calculator</h5>
+              <p style="font-size:0.85rem;">Calculate optimal lot sizes based on risk</p>
+            </div>
+            <div class="card" onclick="navigateTo('timer')" style="cursor:pointer">
+              <h5>⏰ Session & Kill Zone Timer</h5>
+              <p style="font-size:0.85rem;">Track active trading sessions globally</p>
+            </div>
+            <div class="card" onclick="navigateTo('journal')" style="cursor:pointer">
+              <h5>📊 Trading Journal</h5>
+              <p style="font-size:0.85rem;">Log trades and analyze performance</p>
+            </div>
+          </div>
+          
+          ${!completedToday ? `
+          <div class="card card-gold mt-4" style="text-align:center;">
+            <h4>🎯 Ready to Study Today?</h4>
+            <p>Complete at least one lecture to maintain your ${data.streak}-day learning streak!</p>
+            <button class="btn btn-gold btn-lg mt-2" onclick="navigateTo('courses')">Start Learning Now</button>
+          </div>` : `
+          <div class="card card-accent mt-4" style="text-align:center;">
+            <h4>✅ Great Work Today!</h4>
+            <p>You've studied today. Your ${data.streak}-day streak is safe! 🔥</p>
+          </div>`}
+        </div>
+      `;
+    }
+
+    // ==================== COURSE ====================
+    function loadCourseOverview() {
+        const data = getUserData();
+        const content = document.getElementById('contentArea');
+        content.innerHTML = `
+        <div class="animate-fade-in">
+          <h1>Complete Course Curriculum</h1>
+          <p>${courseData.modules.length} Modules • ${courseData.modules.reduce((s,m) => s + m.lectures.length, 0)} Lectures • ${courseData.modules.reduce((s,m) => s + m.estimatedHours, 0)}+ Hours</p>
+          <div class="mt-3">
+            ${courseData.modules.map((m, i) => {
+              const done = m.lectures.filter(l => data.completedLectures.includes(l.id)).length;
+              const pct = Math.round((done / m.lectures.length) * 100);
+              return `<div class="card course-card mb-3" onclick="loadModule(${m.id})" style="cursor:pointer">
+                <div style="display:flex;justify-content:space-between;align-items:start;flex-wrap:wrap;gap:1rem;">
+                  <div>
+                    <div class="module-number">MODULE ${m.id}</div>
+                    <h4>${m.title}</h4>
+                    <p style="font-size:0.9rem;">${m.description}</p>
+                  </div>
+                  <div style="text-align:right;">
+                    <span class="badge-tag badge-primary">${m.difficulty}</span>
+                    <div style="margin-top:0.5rem;font-size:0.85rem;color:var(--text-tertiary);">⏱️ ${m.estimatedHours}h</div>
+                  </div>
+                </div>
+                <div class="progress-bar mt-2"><div class="progress-fill" style="width:${pct}%"></div></div>
+                <span style="font-size:0.8rem;color:var(--text-tertiary);">${done}/${m.lectures.length} lectures completed (${pct}%)</span>
+              </div>`;
+            }).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    function loadModule(moduleId) {
+        const module = courseData.modules.find(m => m.id === moduleId);
+        if (!module) return;
+        currentModule = module;
+        const data = getUserData();
+        const content = document.getElementById('contentArea');
+
+        content.innerHTML = `
+        <div class="animate-fade-in">
+          <button class="btn btn-outline mb-3" onclick="navigateTo('courses')">← Back to All Modules</button>
+          <div class="card card-glass mb-4">
+            <span class="badge-tag badge-primary">Module ${module.id}</span>
+            <span class="badge-tag badge-warning">${module.difficulty}</span>
+            <h1 style="margin:1rem 0;">${module.title}</h1>
+            <p>${module.description}</p>
+            <div style="display:flex;gap:2rem;margin-top:1rem;font-size:0.9rem;color:var(--text-tertiary);">
+              <span>📚 ${module.lectures.length} Lectures</span>
+              <span>⏱️ ${module.estimatedHours} Hours</span>
+              <span>📊 ${module.difficulty} Level</span>
+            </div>
+          </div>
+          <div class="lectures-list">
+            ${module.lectures.map((l, i) => {
+              const done = data.completedLectures.includes(l.id);
+              const bookmarked = data.bookmarks.includes(l.id);
+              return `<div class="card lecture-card mb-2 ${done ? 'completed' : ''}" onclick="loadLecture(${module.id}, ${l.id})" style="cursor:pointer">
+                <div class="lecture-number">${done ? '✓' : i + 1}</div>
+                <div class="lecture-info">
+                  <h5>${l.title}</h5>
+                  <p>${l.description}</p>
+                  <div class="lecture-meta">
+                    <span>⏱️ ${l.duration} min</span>
+                    <span>📊 ${l.difficulty}</span>
+                    ${data.quizScores[l.id] ? `<span>📝 Quiz: ${data.quizScores[l.id]}%</span>` : ''}
+                  </div>
+                </div>
+                <div class="lecture-actions" onclick="event.stopPropagation();">
+                  <button class="icon-btn ${bookmarked ? 'active' : ''}" onclick="toggleBookmark(${l.id})" title="Bookmark">🔖</button>
+                </div>
+              </div>`;
+            }).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    function loadLecture(moduleId, lectureId) {
+        const module = courseData.modules.find(m => m.id === moduleId);
+        const lecture = module.lectures.find(l => l.id === lectureId);
+        if (!lecture) return;
+        currentModule = module;
+        currentLecture = lecture;
+        const data = getUserData();
+        const done = data.completedLectures.includes(lectureId);
+        const notes = data.notes[lectureId] || '';
+        const quizScore = data.quizScores[lectureId];
+        const content = document.getElementById('contentArea');
+
+        updateStudyStreak();
+
+        content.innerHTML = `
+        <div class="lecture-view animate-fade-in">
+          <div class="lecture-sidebar">
+            <h5>Module ${module.id}: ${module.title}</h5>
+            <div class="outline-list">
+              ${module.lectures.map(l => `
+                <div class="outline-item ${l.id === lectureId ? 'active' : ''} ${data.completedLectures.includes(l.id) ? 'completed' : ''}"
+                     onclick="loadLecture(${moduleId}, ${l.id})">
+                  <span class="outline-status">${data.completedLectures.includes(l.id) ? '✓' : '○'}</span>
+                  ${l.title}
+                </div>
+              `).join('')}
+            </div>
+          </div>
+          <div>
+            <div class="card card-glass mb-4">
+              <h1 style="font-size:1.75rem;">${lecture.title}</h1>
+              <div style="display:flex;gap:0.5rem;margin:1rem 0;">
+                <span class="badge-tag badge-primary">${lecture.difficulty}</span>
+                <span class="badge-tag badge-secondary">${lecture.duration} min</span>
+                ${done ? '<span class="badge-tag badge-success">✓ Completed</span>' : ''}
+              </div>
+              ${lecture.content ? formatContent(lecture.content) : '<p>Content coming soon...</p>'}
+              ${lecture.diagram && SVGDiagrams[lecture.diagram] ? `<div class="diagram-container">${SVGDiagrams[lecture.diagram]}</div>` : ''}
+              ${lecture.chartExample ? `<div class="diagram-container">${createChartSVG(lecture.chartExample)}</div>` : ''}
+            </div>
+
+            <div class="card card-glass mb-4">
+              <h4>📝 Your Notes</h4>
+              <textarea class="notes-area" id="lectureNotes" placeholder="Take detailed notes on this lecture for future reference..." 
+                        onchange="saveNotes(${lectureId}, this.value)">${notes}</textarea>
+              <button class="btn btn-outline btn-sm mt-2" onclick="saveNotes(${lectureId}, document.getElementById('lectureNotes').value); showNotification('Notes saved! 📝', 'success')">Save Notes</button>
+            </div>
+
+            <div class="card card-glass mb-4">
+              <h4>📝 Knowledge Check</h4>
+              ${quizScore ? 
+                `<p>Quiz completed! <strong>Score: ${quizScore}%</strong></p>
+                 <button class="btn btn-outline" onclick="startQuiz(${moduleId}, ${lectureId})">Retake Quiz</button>` :
+                `<p>Test your understanding of this lecture</p>
+                 <button class="btn btn-primary" onclick="startQuiz(${moduleId}, ${lectureId})">Take Quiz</button>`
+              }
+            </div>
+
+            <div class="lecture-navigation">
+              ${getPrevLectureBtn(module, lectureId)}
+              <button class="btn btn-primary btn-lg" onclick="completeLecture(${moduleId}, ${lectureId})" ${done ? 'disabled' : ''}>
+                ${done ? '✓ Completed' : 'Mark as Complete'}
+              </button>
+              ${getNextLectureBtn(module, lectureId)}
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function formatContent(content) {
+        return content.sections.map(s => `
+        <div class="content-section">
+          <h3>${s.heading}</h3>
+          ${s.paragraphs ? s.paragraphs.map(p => `<p>${p}</p>`).join('') : ''}
+          ${s.bulletPoints ? `<ul class="content-list">${s.bulletPoints.map(b => `<li>${b}</li>`).join('')}</ul>` : ''}
+          ${s.tips ? `<div class="tip-box"><strong>💡 Professional Tips:</strong><ul>${s.tips.map(t => `<li>${t}</li>`).join('')}</ul></div>` : ''}
+          ${s.commonMistakes ? `<div class="warning-box"><strong>⚠️ Common Mistakes to Avoid:</strong><ul>${s.commonMistakes.map(m => `<li>${m}</li>`).join('')}</ul></div>` : ''}
+        </div>
+      `).join('');
+    }
+
+    function createChartSVG(type) {
+        const charts = {
+            marketStructure: `<svg viewBox="0 0 500 250" class="chart-svg">
+          <rect width="500" height="250" fill="var(--bg-tertiary)" rx="8"/>
+          <text x="250" y="25" text-anchor="middle" fill="var(--text-primary)" font-size="14" font-weight="bold">Bullish Market Structure: HH + HL + BOS</text>
+          <line x1="60" y1="180" x2="110" y2="140" stroke="#10b981" stroke-width="2.5"/>
+          <circle cx="110" cy="140" r="4" fill="#10b981"/>
+          <text x="80" y="130" text-anchor="middle" fill="#10b981" font-size="11" font-weight="bold">HL</text>
+          <line x1="110" y1="140" x2="160" y2="90" stroke="#10b981" stroke-width="2.5"/>
+          <circle cx="160" cy="90" r="4" fill="#10b981"/>
+          <text x="160" y="80" text-anchor="middle" fill="#10b981" font-size="11" font-weight="bold">HH</text>
+          <line x1="160" y1="90" x2="210" y2="120" stroke="#10b981" stroke-width="2.5"/>
+          <circle cx="210" cy="120" r="4" fill="#10b981"/>
+          <text x="210" y="110" text-anchor="middle" fill="#10b981" font-size="11" font-weight="bold">HL</text>
+          <line x1="210" y1="120" x2="280" y2="50" stroke="#10b981" stroke-width="2.5"/>
+          <circle cx="280" cy="50" r="4" fill="#10b981"/>
+          <text x="280" y="40" text-anchor="middle" fill="#10b981" font-size="11" font-weight="bold">HH</text>
+          <line x1="160" y1="90" x2="400" y2="90" stroke="#3b82f6" stroke-width="1.5" stroke-dasharray="6,3"/>
+          <text x="420" y="85" fill="#3b82f6" font-size="12" font-weight="bold">BOS ↑</text>
+        </svg>`,
+            bullishOB: `<svg viewBox="0 0 500 250" class="chart-svg">
+          <rect width="500" height="250" fill="var(--bg-tertiary)" rx="8"/>
+          <text x="250" y="25" text-anchor="middle" fill="var(--text-primary)" font-size="14" font-weight="bold">Bullish Order Block</text>
+          <line x1="60" y1="180" x2="120" y2="120" stroke="#ef4444" stroke-width="2.5"/>
+          <line x1="120" y1="120" x2="180" y2="150" stroke="#10b981" stroke-width="2.5"/>
+          <line x1="180" y1="150" x2="260" y2="60" stroke="#10b981" stroke-width="3"/>
+          <rect x="115" y="120" width="10" height="40" fill="rgba(16,185,129,0.3)" stroke="#10b981" stroke-width="1.5" rx="2"/>
+          <text x="120" y="210" text-anchor="middle" fill="#10b981" font-size="12" font-weight="bold">Bullish OB Zone</text>
+          <text x="120" y="225" text-anchor="middle" fill="var(--text-secondary)" font-size="10">Last down candle</text>
+          <line x1="260" y1="70" x2="260" y2="145" stroke="#10b981" stroke-width="1" stroke-dasharray="4"/>
+          <polygon points="260,145 255,135 265,135" fill="#10b981"/>
+        </svg>`,
+            fvg: `<svg viewBox="0 0 500 250" class="chart-svg">
+          <rect width="500" height="250" fill="var(--bg-tertiary)" rx="8"/>
+          <text x="250" y="25" text-anchor="middle" fill="var(--text-primary)" font-size="14" font-weight="bold">Fair Value Gap (FVG)</text>
+          <rect x="60" y="100" width="25" height="55" fill="#ef4444" rx="3"/>
+          <rect x="110" y="70" width="25" height="45" fill="#10b981" rx="3"/>
+          <rect x="160" y="45" width="25" height="90" fill="#10b981" rx="3"/>
+          <rect x="105" y="70" width="60" height="30" fill="rgba(59,130,246,0.25)" stroke="#3b82f6" stroke-width="2" stroke-dasharray="5,3" rx="4"/>
+          <text x="135" y="180" text-anchor="middle" fill="#3b82f6" font-size="12" font-weight="bold">FVG Zone</text>
+          <text x="135" y="198" text-anchor="middle" fill="var(--text-secondary)" font-size="10">Imbalance to fill</text>
+        </svg>`,
+            liquiditySweep: `<svg viewBox="0 0 500 250" class="chart-svg">
+          <rect width="500" height="250" fill="var(--bg-tertiary)" rx="8"/>
+          <text x="250" y="25" text-anchor="middle" fill="var(--text-primary)" font-size="14" font-weight="bold">Liquidity Sweep Pattern</text>
+          <line x1="60" y1="120" x2="140" y2="50" stroke="#10b981" stroke-width="2.5"/>
+          <line x1="140" y1="50" x2="200" y2="130" stroke="#ef4444" stroke-width="2.5"/>
+          <line x1="200" y1="130" x2="300" y2="180" stroke="#10b981" stroke-width="2.5"/>
+          <line x1="60" y1="180" x2="400" y2="180" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="6,3"/>
+          <text x="420" y="184" fill="#f59e0b" font-size="12" font-weight="bold">SSL</text>
+          <polygon points="260,170 255,180 265,180" fill="#f59e0b"/>
+          <text x="260" y="160" text-anchor="middle" fill="#f59e0b" font-size="11" font-weight="bold">Liquidity Sweep</text>
+        </svg>`
+        };
+        return charts[type] || '';
+    }
+
+    function completeLecture(moduleId, lectureId) {
+        const data = getUserData();
+        if (!data.completedLectures.includes(lectureId)) {
+            data.completedLectures.push(lectureId);
+            data.xp += 25;
+            if (data.xp >= data.level * 100) {
+                data.level++;
+                data.xp -= (data.level - 1) * 100;
+                showNotification(`🎉 Level Up! You're now Level ${data.level}!`, 'success');
+            }
+            saveUserData(data);
+            showNotification('✅ Lecture completed! +25 XP', 'success');
+            updateProgressUI();
+            loadLecture(moduleId, lectureId);
+        }
+    }
+
+    function getPrevLectureBtn(module, currentId) {
+        const idx = module.lectures.findIndex(l => l.id === currentId);
+        if (idx > 0) {
+            const prev = module.lectures[idx - 1];
+            return `<button class="btn btn-outline" onclick="loadLecture(${module.id}, ${prev.id})">← Previous Lecture</button>`;
+        }
+        return '<div></div>';
+    }
+
+    function getNextLectureBtn(module, currentId) {
+        const idx = module.lectures.findIndex(l => l.id === currentId);
+        if (idx < module.lectures.length - 1) {
+            const next = module.lectures[idx + 1];
+            return `<button class="btn btn-outline" onclick="loadLecture(${module.id}, ${next.id})">Next Lecture →</button>`;
+        }
+        return '<div></div>';
+    }
+
+    // ==================== NOTES & BOOKMARKS ====================
+    function saveNotes(lectureId, content) {
+        const data = getUserData();
+        data.notes[lectureId] = content;
+        saveUserData(data);
+    }
+
+    function toggleBookmark(lectureId) {
+        const data = getUserData();
+        const idx = data.bookmarks.indexOf(lectureId);
+        if (idx > -1) {
+            data.bookmarks.splice(idx, 1);
+            showNotification('Bookmark removed', 'info');
+        } else {
+            data.bookmarks.push(lectureId);
+            showNotification('Bookmarked! 🔖', 'success');
+        }
+        saveUserData(data);
+        updateProgressUI();
+        if (currentModule) loadModule(currentModule.id);
+    }
+
+    function showBookmarks() {
+        const data = getUserData();
+        let html = '';
+        if (data.bookmarks.length === 0) {
+            html = '<p>No bookmarked lectures yet. Bookmark lectures for quick access.</p>';
+        } else {
+            data.bookmarks.forEach(id => {
+                courseData.modules.forEach(m => {
+                    const l = m.lectures.find(le => le.id === id);
+                    if (l) html +=
+                        `<div class="card mb-2" onclick="closeModal();loadModule(${m.id});setTimeout(()=>loadLecture(${m.id},${id}),400)" style="cursor:pointer"><h5>${l.title}</h5><p style="font-size:0.85rem;">Module ${m.id}: ${m.title}</p></div>`;
+                });
+            });
+        }
+        openModal('🔖 My Bookmarks', html);
+    }
+
+    function showNotes() {
+        const data = getUserData();
+        const notes = Object.entries(data.notes).filter(([_, c]) => c && c.trim());
+        let html = '';
+        if (notes.length === 0) {
+            html = '<p>No notes saved yet. Take notes during lectures to capture key insights.</p>';
+        } else {
+            notes.forEach(([id, content]) => {
+                let title = `Lecture ${id}`;
+                courseData.modules.forEach(m => {
+                    const l = m.lectures.find(le => le.id === parseInt(id));
+                    if (l) title = l.title;
+                });
+                html +=
+                    `<div class="card mb-2"><h5>${title}</h5><p style="font-size:0.85rem;">${content.substring(0, 200)}...</p></div>`;
+            });
+        }
+        openModal('📝 My Notes', html);
+    }
+
+    // ==================== QUIZ ====================
+    let quizState = { currentQ: 0, answers: [], moduleId: null, lectureId: null, showResults: false };
+
+    function startQuiz(moduleId, lectureId) {
+        const quiz = quizData[lectureId];
+        if (!quiz) {
+            showNotification('No quiz available for this lecture yet.', 'info');
+            return;
+        }
+        quizState = { currentQ: 0, answers: new Array(quiz.questions.length).fill(null), moduleId, lectureId,
+            showResults: false };
+        renderQuiz();
+        document.getElementById('modal').style.display = 'block';
+        document.getElementById('modalTitle').textContent = '📝 Knowledge Check Quiz';
+    }
+
+    function renderQuiz() {
+        const quiz = quizData[quizState.lectureId];
+        if (quizState.showResults) {
+            let score = 0;
+            quizState.answers.forEach((ans, i) => { if (ans === quiz.questions[i].correct) score++; });
+            const pct = Math.round((score / quiz.questions.length) * 100);
+            const data = getUserData();
+            data.quizScores[quizState.lectureId] = pct;
+            saveUserData(data);
+
+            document.getElementById('modalBody').innerHTML = `
+            <div class="quiz-results">
+              <div class="score-circle">
+                <svg width="140" height="140">
+                  <circle cx="70" cy="70" r="60" fill="none" stroke="var(--border)" stroke-width="10"/>
+                  <circle cx="70" cy="70" r="60" fill="none" stroke="${pct >= 70 ? 'var(--success)' : 'var(--warning)'}" stroke-width="10"
+                          stroke-dasharray="${2 * Math.PI * 60}" stroke-dashoffset="${2 * Math.PI * 60 * (1 - pct / 100)}"
+                          transform="rotate(-90 70 70)" stroke-linecap="round"/>
+                  <text x="70" y="65" text-anchor="middle" fill="var(--text-primary)" font-size="28" font-weight="800">${pct}%</text>
+                  <text x="70" y="85" text-anchor="middle" fill="var(--text-secondary)" font-size="12">Score</text>
+                </svg>
+              </div>
+              <h3>${pct >= 80 ? 'Excellent! 🎉' : pct >= 60 ? 'Good Job! 👍' : 'Keep Studying! 📚'}</h3>
+              <p>You scored ${score} out of ${quiz.questions.length}</p>
+              <button class="btn btn-primary" onclick="closeModal();loadLecture(${quizState.moduleId},${quizState.lectureId})">Back to Lecture</button>
+            </div>`;
+        } else {
+            const q = quiz.questions[quizState.currentQ];
+            document.getElementById('modalBody').innerHTML = `
+            <div>
+              <div class="quiz-progress">
+                Question ${quizState.currentQ + 1} of ${quiz.questions.length}
+                <div class="progress-bar mt-2"><div class="progress-fill" style="width:${(quizState.currentQ / quiz.questions.length) * 100}%"></div></div>
+              </div>
+              <h4 class="quiz-question">${q.question}</h4>
+              ${q.options.map((opt, i) => `
+                <div class="quiz-option ${quizState.answers[quizState.currentQ] === i ? 'selected' : ''}" onclick="selectQuizAnswer(${i})">
+                  ${opt}
+                </div>
+              `).join('')}
+              <div class="quiz-actions">
+                ${quizState.currentQ > 0 ? `<button class="btn btn-outline" onclick="prevQuizQuestion()">← Previous</button>` : ''}
+                <button class="btn btn-primary" onclick="nextQuizQuestion()">
+                  ${quizState.currentQ === quiz.questions.length - 1 ? 'Finish Quiz' : 'Next Question →'}
+                </button>
+              </div>
+            </div>`;
+        }
+    }
+
+    function selectQuizAnswer(index) {
+        quizState.answers[quizState.currentQ] = index;
+        renderQuiz();
+    }
+
+    function nextQuizQuestion() {
+        const quiz = quizData[quizState.lectureId];
+        if (quizState.answers[quizState.currentQ] === null) {
+            showNotification('Please select an answer first', 'warning');
+            return;
+        }
+        if (quizState.currentQ < quiz.questions.length - 1) {
+            quizState.currentQ++;
+            renderQuiz();
+        } else {
+            quizState.showResults = true;
+            renderQuiz();
+        }
+    }
+
+    function prevQuizQuestion() {
+        if (quizState.currentQ > 0) {
+            quizState.currentQ--;
+            renderQuiz();
+        }
+    }
+
+    // ==================== SEARCH ====================
+    function performSearch(query) {
+        clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(() => {
+            if (!query || query.length < 2) {
+                if (currentPage === 'courses' || currentPage === 'dashboard') return;
+                navigateTo('dashboard');
+                return;
+            }
+            const results = [];
+            courseData.modules.forEach(m => {
+                m.lectures.forEach(l => {
+                    if (l.title.toLowerCase().includes(query.toLowerCase()) ||
+                        l.description.toLowerCase().includes(query.toLowerCase())) {
+                        results.push({ module: m, lecture: l });
+                    }
+                });
+            });
+            const content = document.getElementById('contentArea');
+            if (results.length === 0) {
+                content.innerHTML =
+                    '<div class="animate-fade-in"><h2>🔍 Search Results</h2><p>No lectures found matching your search.</p></div>';
+            } else {
+                content.innerHTML = `
+              <div class="animate-fade-in">
+                <h2>🔍 Search Results (${results.length} found)</h2>
+                ${results.map(r => `
+                  <div class="card lecture-card mt-2" onclick="loadModule(${r.module.id});setTimeout(()=>loadLecture(${r.module.id},${r.lecture.id}),400)" style="cursor:pointer">
+                    <div class="lecture-number">📚</div>
+                    <div class="lecture-info">
+                      <h5>${r.lecture.title}</h5>
+                      <p>${r.lecture.description}</p>
+                      <span class="badge-tag badge-primary">Module ${r.module.id}: ${r.module.title}</span>
+                    </div>
+                  </div>
+                `).join('')}
+              </div>`;
+            }
+        }, 300);
+    }
+
+    // ==================== JOURNAL ====================
+    function loadJournal() {
+        const data = getUserData();
+        const content = document.getElementById('contentArea');
+        content.innerHTML = `
+        <div class="animate-fade-in">
+          <h1>📊 Trading Journal</h1>
+          <div class="card card-glass mt-3">
+            <h4>New Trade Entry</h4>
+            <div class="journal-form mt-2">
+              <div class="grid grid-3">
+                <div class="form-group"><label>Currency Pair</label><input type="text" id="jPair" placeholder="EUR/USD"></div>
+                <div class="form-group"><label>Direction</label><select id="jDir"><option>Long</option><option>Short</option></select></div>
+                <div class="form-group"><label>Date</label><input type="date" id="jDate"></div>
+              </div>
+              <div class="grid grid-2">
+                <div class="form-group"><label>Entry Price</label><input type="number" id="jEntry" step="0.00001"></div>
+                <div class="form-group"><label>Exit Price</label><input type="number" id="jExit" step="0.00001"></div>
+              </div>
+              <div class="grid grid-2">
+                <div class="form-group"><label>Stop Loss</label><input type="number" id="jSL" step="0.00001"></div>
+                <div class="form-group"><label>Take Profit</label><input type="number" id="jTP" step="0.00001"></div>
+              </div>
+              <div class="form-group"><label>Trade Notes & Rationale</label><textarea id="jNotes" rows="3" placeholder="Why did you take this trade? What setup?"></textarea></div>
+              <button class="btn btn-primary" onclick="saveJournalEntry()">💾 Save Trade</button>
+            </div>
+          </div>
+          <h3 class="mt-4">Trade History (${data.journalEntries.length})</h3>
+          ${data.journalEntries.length === 0 ? '<p>No trades recorded yet. Start journaling to improve!</p>' :
+            [...data.journalEntries].reverse().map((e, i) => {
+              const pnlNum = parseFloat(e.pnl);
+              return `<div class="card mb-2 ${pnlNum > 0 ? 'card-accent' : ''}">
+                <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;">
+                  <div>
+                    <span class="badge-tag ${e.direction === 'Long' ? 'badge-success' : 'badge-danger'}">${e.direction}</span>
+                    <strong>${e.pair}</strong>
+                  </div>
+                  <span style="color:${pnlNum >= 0 ? 'var(--success)' : 'var(--danger)'};font-weight:700;font-size:1.1rem;">
+                    ${pnlNum >= 0 ? '+' : ''}${e.pnl} pips
+                  </span>
+                  <span style="font-size:0.85rem;color:var(--text-tertiary);">${new Date(e.date).toLocaleDateString()}</span>
+                </div>
+                <p style="margin-top:0.5rem;font-size:0.85rem;">Entry: ${e.entry} | Exit: ${e.exit} | SL: ${e.sl} | TP: ${e.tp}</p>
+                ${e.notes ? `<p style="font-size:0.85rem;color:var(--text-secondary);">${e.notes}</p>` : ''}
+                <button class="btn btn-outline btn-sm mt-2" onclick="deleteJournalEntry(${data.journalEntries.length - 1 - i})">Delete</button>
+              </div>`;
+            }).join('')
+          }
+        </div>
+      `;
+        document.getElementById('jDate').value = new Date().toISOString().split('T')[0];
+    }
+
+    function saveJournalEntry() {
+        const data = getUserData();
+        const pair = document.getElementById('jPair').value;
+        const direction = document.getElementById('jDir').value;
+        const date = document.getElementById('jDate').value;
+        const entry = parseFloat(document.getElementById('jEntry').value);
+        const exit = parseFloat(document.getElementById('jExit').value);
+        const sl = parseFloat(document.getElementById('jSL').value) || 0;
+        const tp = parseFloat(document.getElementById('jTP').value) || 0;
+        const notes = document.getElementById('jNotes').value;
+        if (!pair || !entry || !exit) { showNotification('Please fill required fields', 'warning'); return; }
+        const pnl = direction === 'Long' ? (exit - entry) : (entry - exit);
+        data.journalEntries.push({ date: date || new Date().toISOString(), pair, direction, entry, exit, sl, tp,
+            pnl: pnl.toFixed(1), notes });
+        saveUserData(data);
+        showNotification('Trade saved! 📊', 'success');
+        loadJournal();
+    }
+
+    function deleteJournalEntry(index) {
+        const data = getUserData();
+        data.journalEntries.splice(index, 1);
+        saveUserData(data);
+        loadJournal();
+        showNotification('Trade deleted', 'info');
+    }
+
+    // ==================== CALCULATOR ====================
+    function loadCalculator() {
+        const content = document.getElementById('contentArea');
+        content.innerHTML = `
+        <div class="animate-fade-in">
+          <h1>🧮 Trading Calculators</h1>
+          <div class="calc-grid mt-3">
+            <div class="card">
+              <h4>Position Size Calculator</h4>
+              <div class="form-group"><label>Account Balance ($)</label><input type="number" id="cBal" value="10000"></div>
+              <div class="form-group"><label>Risk % per Trade</label><input type="number" id="cRisk" value="1" step="0.1"></div>
+              <div class="form-group"><label>Stop Loss (pips)</label><input type="number" id="cSL" value="50"></div>
+              <button class="btn btn-primary mt-2" onclick="calcPosition()">Calculate</button>
+              <div class="calc-result" id="posResult">Enter values and click Calculate</div>
+            </div>
+            <div class="card">
+              <h4>Risk/Reward Calculator</h4>
+              <div class="form-group"><label>Entry Price</label><input type="number" id="rrE" step="0.00001"></div>
+              <div class="grid grid-2">
+                <div class="form-group"><label>Stop Loss</label><input type="number" id="rrS" step="0.00001"></div>
+                <div class="form-group"><label>Take Profit</label><input type="number" id="rrT" step="0.00001"></div>
+              </div>
+              <button class="btn btn-primary mt-2" onclick="calcRR()">Calculate R:R</button>
+              <div class="calc-result" id="rrResult">Enter values and click Calculate</div>
+            </div>
+            <div class="card">
+              <h4>Lot Size Converter</h4>
+              <div class="form-group"><label>Position Size (units)</label><input type="number" id="lotU" value="100000"></div>
+              <button class="btn btn-primary mt-2" onclick="calcLot()">Convert</button>
+              <div class="calc-result" id="lotResult">Enter units and click Convert</div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function calcPosition() {
+        const bal = parseFloat(document.getElementById('cBal').value);
+        const risk = parseFloat(document.getElementById('cRisk').value);
+        const sl = parseFloat(document.getElementById('cSL').value);
+        if (bal && risk && sl) {
+            const riskAmt = bal * (risk / 100);
+            const posSize = (riskAmt / (sl * 10)).toFixed(2);
+            document.getElementById('posResult').innerHTML =
+                `Position Size: <strong>${posSize} units</strong><br>Risk Amount: <strong>$${riskAmt.toFixed(2)}</strong>`;
+        }
+    }
+
+    function calcRR() {
+        const entry = parseFloat(document.getElementById('rrE').value);
+        const sl = parseFloat(document.getElementById('rrS').value);
+        const tp = parseFloat(document.getElementById('rrT').value);
+        if (entry && sl && tp) {
+            const risk = Math.abs(entry - sl);
+            const reward = Math.abs(tp - entry);
+            const ratio = (reward / risk).toFixed(2);
+            document.getElementById('rrResult').innerHTML =
+                `R:R Ratio: <strong>1:${ratio}</strong><br>Risk: ${risk.toFixed(5)} | Reward: ${reward.toFixed(5)}`;
+        }
+    }
+
+    function calcLot() {
+        const units = parseFloat(document.getElementById('lotU').value);
+        if (units) {
+            document.getElementById('lotResult').innerHTML = `
+            Standard Lots: <strong>${(units/100000).toFixed(2)}</strong><br>
+            Mini Lots: <strong>${(units/10000).toFixed(2)}</strong><br>
+            Micro Lots: <strong>${(units/1000).toFixed(2)}</strong>
+          `;
+        }
+    }
+
+    // ==================== GLOSSARY ====================
+    function loadGlossary() {
+        const content = document.getElementById('contentArea');
+        content.innerHTML = `
+        <div class="animate-fade-in">
+          <h1>📖 Trading Glossary A-Z</h1>
+          <input type="text" class="search-input mt-3" placeholder="Search glossary terms..." oninput="filterGlossary(this.value)" style="max-width:500px;">
+          <div class="glossary-grid mt-3" id="glossaryList">
+            ${glossaryData.map(g => `<div class="card glossary-item"><h5>${g.term}</h5><p>${g.definition}</p></div>`).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    function filterGlossary(query) {
+        const filtered = glossaryData.filter(g =>
+            g.term.toLowerCase().includes(query.toLowerCase()) ||
+            g.definition.toLowerCase().includes(query.toLowerCase())
+        );
+        const el = document.getElementById('glossaryList');
+        if (el) el.innerHTML = filtered.map(g =>
+            `<div class="card glossary-item"><h5>${g.term}</h5><p>${g.definition}</p></div>`).join('');
+    }
+
+    // ==================== SESSION TIMER ====================
+    function loadSessionTimer() {
+        const content = document.getElementById('contentArea');
+        content.innerHTML = `
+        <div class="animate-fade-in">
+          <h1>⏰ Forex Session & Kill Zone Timer</h1>
+          <div class="session-timer mt-3" id="sessionTimers"></div>
+        </div>
+      `;
+        updateSessionTimers();
+        setInterval(updateSessionTimers, 30000);
+    }
+
+    function updateSessionTimers() {
+        const now = new Date();
+        const utcH = now.getUTCHours();
+        const utcM = now.getUTCMinutes();
+        const sessions = [
+            { name: 'Sydney', start: 22, end: 7, killZone: false },
+            { name: 'Tokyo/Asian', start: 0, end: 9, killZone: '8 PM - 10 PM EST' },
+            { name: 'London', start: 8, end: 17, killZone: '2 AM - 5 AM EST' },
+            { name: 'New York', start: 13, end: 22, killZone: '8 AM - 11 AM EST' }
+        ];
+        const el = document.getElementById('sessionTimers');
+        if (!el) return;
+        el.innerHTML = sessions.map(s => {
+            let active = false;
+            if (s.start < s.end) active = utcH >= s.start && utcH < s.end;
+            else active = utcH >= s.start || utcH < s.end;
+            return `<div class="card timer-card">
+            <h4>${s.name}</h4>
+            <div class="timer-display">${active ? '🟢' : '🔴'}</div>
+            <span class="timer-status ${active ? 'active' : 'inactive'}">${active ? 'ACTIVE' : 'CLOSED'}</span>
+            ${s.killZone ? `<p class="mt-2" style="font-size:0.8rem;">Kill Zone: ${s.killZone}</p>` : ''}
+          </div>`;
+        }).join('');
+    }
+
+    // ==================== CERTIFICATE ====================
+    function loadCertificate() {
+        const progress = calculateProgress();
+        const data = getUserData();
+        const content = document.getElementById('contentArea');
+        if (progress < 100) {
+            content.innerHTML = `
+          <div class="animate-fade-in" style="text-align:center;">
+            <h1>🎖️ Certificate of Completion</h1>
+            <div class="card mt-4" style="max-width:500px;margin:2rem auto;">
+              <h2>🔒</h2>
+              <p>Complete all lectures to unlock your professional certificate</p>
+              <div class="progress-bar mt-3"><div class="progress-fill" style="width:${progress}%"></div></div>
+              <p style="margin-top:1rem;">Progress: <strong>${progress}%</strong></p>
+              <p style="font-size:0.85rem;">${courseData.modules.reduce((s,m)=>s+m.lectures.length,0) - data.completedLectures.length} lectures remaining</p>
+            </div>
+          </div>`;
+        } else {
+            content.innerHTML = `
+          <div class="animate-fade-in">
+            <div class="certificate-container">
+              <div class="certificate-seal">🎖️</div>
+              <h1 style="color:var(--gold);">Certificate of Completion</h1>
+              <p style="font-size:1.2rem;">This certifies that</p>
+              <h2 style="font-size:2rem;margin:1rem 0;">Trading Student</h2>
+              <p style="font-size:1.1rem;">has successfully completed the</p>
+              <h3 style="color:var(--accent-light);">SMC ICT Academy Professional Trading Course</h3>
+              <p>Mastering Institutional Smart Money Concepts</p>
+              <p style="margin-top:2rem;">Completed on: ${new Date().toLocaleDateString('en-US', {year:'numeric',month:'long',day:'numeric'})}</p>
+              <p>Level Achieved: ${data.level} | XP Earned: ${data.xp}</p>
+              <button class="btn btn-gold btn-lg mt-3" onclick="window.print()">🖨️ Print Certificate</button>
+            </div>
+          </div>`;
+        }
+    }
+
+    // ==================== PLAYBOOK ====================
+    function loadPlaybook() {
+        const content = document.getElementById('contentArea');
+        content.innerHTML = `
+        <div class="animate-fade-in">
+          <h1>📖 Trading Playbook</h1>
+          <p>Your complete reference guide for SMC setups and patterns</p>
+          <div class="grid grid-2 mt-3">
+            <div class="card card-accent">
+              <h4>🟢 Bullish Setup Checklist</h4>
+              <ul class="content-list">
+                <li>Bullish market structure (HH + HL)</li>
+                <li>Price at discount (below 50% of range)</li>
+                <li>Bullish OB or FVG identified</li>
+                <li>Liquidity sweep of recent low completed</li>
+                <li>Entry at OB/FVG within discount zone</li>
+                <li>Stop loss below the manipulation low</li>
+                <li>Target: Recent high or external liquidity</li>
+              </ul>
+            </div>
+            <div class="card card-accent">
+              <h4>🔴 Bearish Setup Checklist</h4>
+              <ul class="content-list">
+                <li>Bearish market structure (LH + LL)</li>
+                <li>Price at premium (above 50% of range)</li>
+                <li>Bearish OB or FVG identified</li>
+                <li>Liquidity sweep of recent high completed</li>
+                <li>Entry at OB/FVG within premium zone</li>
+                <li>Stop loss above the manipulation high</li>
+                <li>Target: Recent low or external liquidity</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // ==================== STATS ====================
+    function loadStats() {
+        const data = getUserData();
+        const content = document.getElementById('contentArea');
+        const totalLectures = courseData.modules.reduce((s, m) => s + m.lectures.length, 0);
+        content.innerHTML = `
+        <div class="animate-fade-in">
+          <h1>📈 Learning Statistics</h1>
+          <div class="grid grid-4 mt-3">
+            <div class="card stat-card"><div class="stat-icon">📚</div><div class="stat-value">${data.completedLectures.length}</div><div class="stat-label">Lectures Completed</div></div>
+            <div class="card stat-card"><div class="stat-icon">📝</div><div class="stat-value">${Object.keys(data.notes).filter(k => data.notes[k]).length}</div><div class="stat-label">Notes Taken</div></div>
+            <div class="card stat-card"><div class="stat-icon">📊</div><div class="stat-value">${data.journalEntries.length}</div><div class="stat-label">Trades Logged</div></div>
+            <div class="card stat-card"><div class="stat-icon">🔥</div><div class="stat-value">${data.streak}</div><div class="stat-label">Day Streak</div></div>
+          </div>
+          <div class="card mt-4">
+            <h4>Level Progress</h4>
+            <p>Level ${data.level} • ${data.xp}/100 XP to Level ${data.level + 1}</p>
+            <div class="progress-bar"><div class="progress-fill" style="width:${data.xp}%"></div></div>
+          </div>
+        </div>
+      `;
+    }
+
+    // ==================== INITIALIZATION ====================
+    document.addEventListener('DOMContentLoaded', () => {
+        const data = getUserData();
+        if (data.theme === 'light') {
+            document.body.classList.remove('dark-theme');
+            document.body.classList.add('light-theme');
+        }
+        loadDashboard();
+        updateProgressUI();
+
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            performSearch(e.target.value);
+        });
+
+        // Check mobile
+        if (window.innerWidth <= 768) {
+            document.getElementById('mobileMenuBtn').style.display = 'flex';
+        }
+
+        document.getElementById('modal').addEventListener('click', function(e) {
+            if (e.target === this) closeModal();
+        });
+    });
+
+    window.addEventListener('resize', () => {
+        if (window.innerWidth <= 768) {
+            document.getElementById('mobileMenuBtn').style.display = 'flex';
+        } else {
+            document.getElementById('mobileMenuBtn').style.display = 'none';
+            document.getElementById('sidebar').classList.remove('mobile-open');
+            document.getElementById('mobileOverlay').style.display = 'none';
+        }
+    });
+
+    // Keyboard shortcuts
+    document.addEventListener('keydown', function(e) {
+        if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+            e.preventDefault();
+            document.getElementById('searchInput').focus();
+        }
+        if (e.key === 'Escape') closeModal();
+    });
+</script>
+</body>
+</html>
